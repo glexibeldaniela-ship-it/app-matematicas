@@ -36,19 +36,29 @@ document.getElementById('auth-form').onsubmit = async (e) => {
     const seccion = document.getElementById('reg-seccion').value;
 
     try {
+
         const userCredential = await auth.createUserWithEmailAndPassword(email, pass);
         const user = userCredential.user;
 
-        await firebase.firestore().collection("usuarios").doc(user.uid).set({
-            nombres,
-            apellidos,
-            cedula,
-            grado,
-            seccion,
-            email,
+        await db.collection("usuarios").doc(user.uid).set({
+            nombres: nombres,
+            apellidos: apellidos,
+            cedula: cedula,
+            grado: grado,
+            seccion: seccion,
+            email: email,
             role: "estudiante",
             examenesRealizados: []
         });
+
+        alert("Registro exitoso 🎉");
+        toggleAuth();
+
+    } catch (error) {
+        alert("Error: " + error.message);
+    }
+    }
+        );
 
         alert("Registro exitoso 🎉");
         toggleAuth();
