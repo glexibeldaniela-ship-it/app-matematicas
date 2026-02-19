@@ -3,40 +3,61 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MathEdu</title>
+  <title>MathEdu Pro</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+<!-- LOGIN / REGISTRO -->
 <div id="auth-section" class="panel">
   <h2 id="auth-title">Iniciar Sesión</h2>
 
   <form id="auth-form">
     <div id="register-only" class="hidden">
-      <input id="reg-nombres" placeholder="Nombres">
-      <input id="reg-apellidos" placeholder="Apellidos">
-      <input id="reg-cedula" placeholder="Cédula">
-      <select id="reg-grado">
+      <input type="text" id="reg-nombres" placeholder="Nombres" required>
+      <input type="text" id="reg-apellidos" placeholder="Apellidos" required>
+      <input type="text" id="reg-cedula" placeholder="Cédula" required>
+
+      <!-- GRADO -->
+      <select id="reg-grado" required>
+        <option value="">Seleccione Año</option>
         <option value="1">1er Año</option>
         <option value="2">2do Año</option>
+        <option value="3">3er Año</option>
       </select>
-      <select id="reg-seccion">
+
+      <!-- SECCIÓN -->
+      <select id="reg-seccion" required>
+        <option value="">Seleccione Sección</option>
         <option value="A">Sección A</option>
         <option value="B">Sección B</option>
+        <option value="C">Sección C</option>
       </select>
     </div>
 
-    <input type="email" id="email" placeholder="Correo" required>
+    <input type="email" id="email" placeholder="Correo electrónico" required>
     <input type="password" id="password" placeholder="Contraseña" required>
     <button type="submit" class="btn-primary">Entrar</button>
   </form>
 
-  <p onclick="toggleAuth()">¿No tienes cuenta? Regístrate</p>
+  <p onclick="toggleAuth()" style="cursor:pointer;">
+    ¿No tienes cuenta? Regístrate
+  </p>
 </div>
 
+<!-- PANEL PROFESOR -->
+<div id="admin-panel" class="panel hidden">
+  <h2>Panel de Profesor</h2>
+  <button onclick="logout()">Cerrar Sesión</button>
+  <hr>
+  <h3>Gestión de Estudiantes</h3>
+  <div id="lista-alumnos"></div>
+</div>
+
+<!-- PANEL ESTUDIANTE -->
 <div id="student-panel" class="panel hidden">
-  <h3 id="student-welcome"></h3>
-  <button onclick="logout()">Cerrar sesión</button>
+  <h2 id="student-welcome"></h2>
+  <button onclick="logout()">Cerrar Sesión</button>
 </div>
 
 <!-- FIREBASE -->
@@ -69,7 +90,6 @@
   };
 </script>
 
-<script defer src="script.js"></script>
-
+<script src="script.js"></script>
 </body>
 </html>
