@@ -13,7 +13,8 @@ function toggleAuth() {
     document.getElementById('auth-title').innerText = modoRegistro ? "Crear Cuenta Estudiante" : "Iniciar Sesión";
 }
 
-document.getElementById('auth-form').onsubmit = (e) => {
+document.getElementById('auth-form').onsubmit = async (e) => {
+    .onsubmit = (e) => {
     e.preventDefault();
     const email = document.getElementById('email').value;
     const pass = document.getElementById('password').value;
@@ -27,23 +28,36 @@ document.getElementById('auth-form').onsubmit = (e) => {
     }
 
     if (modoRegistro) {
-        const newUser = {
-            id: Date.now(),
-            nombres: document.getElementById('reg-nombres').value,
-            apellidos: document.getElementById('reg-apellidos').value,
-            cedula: document.getElementById('reg-cedula').value,
-            grado: document.getElementById('reg-grado').value,
-            seccion: document.getElementById('reg-seccion').value,
-            email: email,
-            pass: pass,
-            foto: null,
+
+    const nombres = document.getElementById('reg-nombres').value;
+    const apellidos = document.getElementById('reg-apellidos').value;
+    const cedula = document.getElementById('reg-cedula').value;
+    const grado = document.getElementById('reg-grado').value;
+    const seccion = document.getElementById('reg-seccion').value;
+
+    try {
+        const userCredential = await auth.createUserWithEmailAndPassword(email, pass);
+        const user = userCredential.user;
+
+        await firebase.firestore().collection("usuarios").doc(user.uid).set({
+            nombres,
+            apellidos,
+            cedula,
+            grado,
+            seccion,
+            email,
+            role: "estudiante",
             examenesRealizados: []
-        };
-        db.usuarios.push(newUser);
-        saveDB();
-        alert("¡Registro exitoso! Ya puedes entrar.");
+        });
+
+        alert("Registro exitoso 🎉");
         toggleAuth();
-    } else {
+
+    } catch (error) {
+        alert("Error: " + error.message);
+    }
+    }
+    else {
         const user = db.usuarios.find(u => u.email === email && u.pass === pass);
         if (user) {
             currentUser = user;
