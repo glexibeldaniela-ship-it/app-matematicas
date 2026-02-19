@@ -1,9 +1,7 @@
-// Base de Datos en Memoria Local
-let db = JSON.parse(localStorage.getItem('mathEduDB')) || { 
-    usuarios: [], 
-    examenes: [], 
-    notas: [] 
-};
+// Firebase
+const db = window.firebaseDB;
+const auth = window.firebaseAuth;
+
 
 let currentUser = null;
 let modoRegistro = false;
