@@ -1,24 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MathEdu</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="auth-section" class="panel">
+  <h2 id="auth-title">Iniciar Sesión</h2>
+
+  <form id="auth-form">
+    <div id="register-only" class="hidden">
+      <input id="reg-nombres" placeholder="Nombres">
+      <input id="reg-apellidos" placeholder="Apellidos">
+      <input id="reg-cedula" placeholder="Cédula">
+      <select id="reg-grado">
+        <option value="1">1er Año</option>
+        <option value="2">2do Año</option>
+      </select>
+      <select id="reg-seccion">
+        <option value="A">Sección A</option>
+        <option value="B">Sección B</option>
+      </select>
+    </div>
+
+    <input type="email" id="email" placeholder="Correo" required>
+    <input type="password" id="password" placeholder="Contraseña" required>
+    <button type="submit" class="btn-primary">Entrar</button>
+  </form>
+
+  <p onclick="toggleAuth()">¿No tienes cuenta? Regístrate</p>
+</div>
+
+<div id="student-panel" class="panel hidden">
+  <h3 id="student-welcome"></h3>
+  <button onclick="logout()">Cerrar sesión</button>
+</div>
+
+<!-- FIREBASE -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
   import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
   import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
   const firebaseConfig = {
-    apiKey: "AQUI_TU_API_KEY",
-    authDomain: "AQUI_TU_AUTH_DOMAIN",
-    projectId: "AQUI_TU_PROJECT_ID",
-    storageBucket: "AQUI_TU_STORAGE_BUCKET",
-    messagingSenderId: "AQUI_TU_MESSAGING_SENDER_ID",
-    appId: "AQUI_TU_APP_ID"
+    apiKey: "PEGA_AQUI_TU_API_KEY",
+    authDomain: "PEGA_AQUI_TU_AUTH_DOMAIN",
+    projectId: "PEGA_AQUI_TU_PROJECT_ID",
+    appId: "PEGA_AQUI_TU_APP_ID"
   };
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const db = getFirestore(app);
 
-  window.firebaseAuth = auth;
-  window.firebaseDB = db;
-  window.fbFunctions = {
+  window.auth = auth;
+  window.db = db;
+  window.fb = {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     doc,
@@ -26,3 +66,7 @@
     getDoc
   };
 </script>
+
+<script defer src="script.js"></script>
+</body>
+</html>
