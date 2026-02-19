@@ -85,3 +85,6 @@ function showView(id) {
 function logout() {
   location.reload();
 }
+window.toggleAuth = toggleAuth;
+window.logout = logout;
+window.showView = showView;
