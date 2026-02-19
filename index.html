@@ -1,111 +1,7 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MathEdu Pro - Sistema de Evaluación</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-</head>
-<body>
-
-    <div id="auth-section" class="panel">
-        <h2 id="auth-title">Bienvenido a MathEdu</h2>
-        <form id="auth-form">
-            <div id="register-only" class="hidden">
-                <input type="text" id="reg-nombres" placeholder="Dos Nombres (Obligatorio)">
-                <input type="text" id="reg-apellidos" placeholder="Dos Apellidos (Obligatorio)">
-                <input type="text" id="reg-cedula" placeholder="Cédula (Estudiante o Madre)">
-                <select id="reg-grado">
-                    <option value="1">1er Año</option>
-                    <option value="2">2do Año</option>
-                    <option value="3">3er Año</option>
-                </select>
-                <select id="reg-seccion">
-                    <option value="A">Sección A</option>
-                    <option value="B">Sección B</option>
-                    <option value="C">Sección C</option>
-                </select>
-            </div>
-            <input type="email" id="email" placeholder="Correo electrónico" required>
-            <input type="password" id="password" placeholder="Contraseña" required>
-            <button type="submit" class="btn-primary">Entrar</button>
-        </form>
-        <p onclick="toggleAuth()" id="toggle-text">¿No tienes cuenta? Regístrate</p>
-    </div>
-
-    <div id="admin-panel" class="panel hidden">
-        <nav class="nav-bar">
-            <span>Panel de Control (Profesor)</span>
-            <button onclick="logout()" class="btn-exit">Salir</button>
-        </nav>
-        
-        <div class="tabs">
-            <button onclick="switchTab('tab-examenes')">Crear Examen</button>
-            <button onclick="switchTab('tab-estudiantes')">Lista de Alumnos</button>
-        </div>
-
-        <section id="tab-examenes" class="tab-content">
-            <h3>Nueva Evaluación (Escala 1-20)</h3>
-            <input type="text" id="ex-nombre" placeholder="Nombre del tema">
-            <input type="number" id="ex-tiempo" placeholder="Tiempo en minutos">
-            <button onclick="guardarExamen()" class="btn-success">Publicar Examen</button>
-        </section>
-
-        <section id="tab-estudiantes" class="tab-content hidden">
-            <h3>Listado por Año y Sección</h3>
-            <button onclick="generarPDF()" class="btn-pdf">Descargar PDF de Notas</button>
-            <div class="table-scroll">
-                <table id="tabla-notas">
-                    <thead>
-                        <tr>
-                            <th>Estudiante</th>
-                            <th>Año/Sec</th>
-                            <th>Nota</th>
-                            <th>Acción</th>
-                        </tr>
-                    </thead>
-                    <tbody id="lista-alumnos-body"></tbody>
-                </table>
-            </div>
-        </section>
-    </div>
-
-    <div id="student-panel" class="panel hidden">
-        <div class="profile-header">
-            <div class="avatar-container" onclick="document.getElementById('file-input').click()">
-                <img id="profile-img" src="https://via.placeholder.com/80" alt="Perfil">
-                <input type="file" id="file-input" class="hidden" onchange="subirFoto(event)">
-            </div>
-            <h3 id="student-welcome">Estudiante</h3>
-        </div>
-
-        <div id="exam-area">
-            <h4>Exámenes Disponibles</h4>
-            <div id="available-exams"></div>
-        </div>
-
-        <div id="student-progress">
-            <h4>Mi Progreso</h4>
-            <div id="my-grades"></div>
-        </div>
-
-        <button onclick="logout()" class="btn-exit">Cerrar Sesión</button>
-    </div>
-
-    <div id="active-exam-room" class="panel hidden" style="background: #000; color: #fff;">
-        <h2 id="current-exam-title">Examen en curso...</h2>
-        <div id="timer-display">Tiempo restante: 00:00</div>
-        <div id="questions-container"></div>
-        <p style="color: red;">¡ADVERTENCIA! Si sales de esta pantalla, el examen se anulará.</p>
-        <button onclick="finalizarExamen()" class="btn-success">Enviar Respuestas</button>
-    </div>
-
-    <!-- FIREBASE -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-  import { getFirestore } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-  import { getAuth } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+  import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AQUI_TU_API_KEY",
@@ -117,13 +13,16 @@
   };
 
   const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
   const auth = getAuth(app);
+  const db = getFirestore(app);
 
-  window.firebaseDB = db;
   window.firebaseAuth = auth;
+  window.firebaseDB = db;
+  window.fbFunctions = {
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    doc,
+    setDoc,
+    getDoc
+  };
 </script>
-
-<script src="script.js"></script>
-
-    
