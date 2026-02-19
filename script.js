@@ -1,99 +1,59 @@
-const auth = window.firebaseAuth;
-const db = window.firebaseDB;
-const {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  doc,
-  setDoc,
-  getDoc
-} = window.fbFunctions;
+const { createUserWithEmailAndPassword, signInWithEmailAndPassword, doc, setDoc, getDoc } = window.fb;
+const auth = window.auth;
+const db = window.db;
 
 let modoRegistro = false;
-let currentUser = null;
 
-// Cambiar entre login y registro
 function toggleAuth() {
   modoRegistro = !modoRegistro;
   document.getElementById('register-only').classList.toggle('hidden');
   document.getElementById('auth-title').innerText =
-    modoRegistro ? "Crear Cuenta Estudiante" : "Iniciar Sesión";
+    modoRegistro ? "Crear cuenta" : "Iniciar sesión";
 }
 
-// Manejo del formulario
 document.getElementById('auth-form').addEventListener('submit', async (e) => {
   e.preventDefault();
 
-  const email = document.getElementById('email').value;
-  const pass = document.getElementById('password').value;
+  const email = emailInput.value;
+  const password = passwordInput.value;
 
-  // LOGIN PROFESOR FIJO
-  if (email === "profe@matematicas.com" && pass === "admin2024") {
-    showView('admin-panel');
-    return;
-  }
-
-  // REGISTRO
   if (modoRegistro) {
-
-    const nombres = document.getElementById('reg-nombres').value;
-    const apellidos = document.getElementById('reg-apellidos').value;
-    const cedula = document.getElementById('reg-cedula').value;
-    const grado = document.getElementById('reg-grado').value;
-    const seccion = document.getElementById('reg-seccion').value;
-
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
-      const user = userCredential.user;
+      const userCred = await createUserWithEmailAndPassword(auth, email, password);
+      const uid = userCred.user.uid;
 
-      await setDoc(doc(db, "usuarios", user.uid), {
-        nombres,
-        apellidos,
-        cedula,
-        grado,
-        seccion,
-        email,
-        role: "estudiante"
+      await setDoc(doc(db, "usuarios", uid), {
+        nombres: reg-nombres.value,
+        apellidos: reg-apellidos.value,
+        cedula: reg-cedula.value,
+        grado: reg-grado.value,
+        seccion: reg-seccion.value
       });
 
-      alert("Registro exitoso 🎉");
+      alert("Registro exitoso");
       toggleAuth();
-
-    } catch (error) {
-      alert("Error: " + error.message);
+    } catch (e) {
+      alert(e.message);
     }
 
   } else {
-
-    // LOGIN ESTUDIANTE
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, pass);
-      const user = userCredential.user;
-
-      const docSnap = await getDoc(doc(db, "usuarios", user.uid));
-
-      if (docSnap.exists()) {
-        currentUser = docSnap.data();
-        showView('student-panel');
-        document.getElementById('student-welcome').innerText =
-          "Hola, " + currentUser.nombres;
-      } else {
-        alert("No se encontraron datos del usuario.");
-      }
-
-    } catch (error) {
-      alert("Correo o contraseña incorrectos");
+      const userCred = await signInWithEmailAndPassword(auth, email, password);
+      const snap = await getDoc(doc(db, "usuarios", userCred.user.uid));
+      document.getElementById("student-welcome").innerText =
+        "Hola " + snap.data().nombres;
+      show("student-panel");
+    } catch (e) {
+      alert("Error al iniciar sesión");
     }
-
   }
 });
 
-// Mostrar panel
-function showView(viewId) {
+function show(id) {
   document.querySelectorAll('.panel').forEach(p => p.classList.add('hidden'));
-  document.getElementById(viewId).classList.remove('hidden');
+  document.getElementById(id).classList.remove('hidden');
 }
 
-// Cerrar sesión
 function logout() {
   location.reload();
-}                  
+}
