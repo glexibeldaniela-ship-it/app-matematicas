@@ -14,8 +14,8 @@ function toggleAuth() {
 document.getElementById('auth-form').addEventListener('submit', async (e) => {
   e.preventDefault();
 
-  const email = emailInput.value;
-  const password = passwordInput.value;
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
 
   if (modoRegistro) {
     try {
@@ -23,15 +23,16 @@ document.getElementById('auth-form').addEventListener('submit', async (e) => {
       const uid = userCred.user.uid;
 
       await setDoc(doc(db, "usuarios", uid), {
-        nombres: reg-nombres.value,
-        apellidos: reg-apellidos.value,
-        cedula: reg-cedula.value,
-        grado: reg-grado.value,
-        seccion: reg-seccion.value
+        nombres: document.getElementById("reg-nombres").value,
+        apellidos: document.getElementById("reg-apellidos").value,
+        cedula: document.getElementById("reg-cedula").value,
+        grado: document.getElementById("reg-grado").value,
+        seccion: document.getElementById("reg-seccion").value
       });
 
-      alert("Registro exitoso");
+      alert("Registro exitoso 🎉");
       toggleAuth();
+
     } catch (e) {
       alert(e.message);
     }
@@ -40,9 +41,12 @@ document.getElementById('auth-form').addEventListener('submit', async (e) => {
     try {
       const userCred = await signInWithEmailAndPassword(auth, email, password);
       const snap = await getDoc(doc(db, "usuarios", userCred.user.uid));
+
       document.getElementById("student-welcome").innerText =
         "Hola " + snap.data().nombres;
+
       show("student-panel");
+
     } catch (e) {
       alert("Error al iniciar sesión");
     }
