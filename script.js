@@ -67,15 +67,29 @@ document.getElementById('auth-form').onsubmit = async (e) => {
         alert("Error: " + error.message);
     }
     }
-    else {
-        const user = db.usuarios.find(u => u.email === email && u.pass === pass);
-        if (user) {
-            currentUser = user;
-            showView('student-panel');
-            cargarDashboardEstudiante();
-        } else {
-            alert("Usuario no encontrado o datos incorrectos");
-        }
+    } else {
+
+    try {
+
+        const userCredential = await auth.signInWithEmailAndPassword(email, pass);
+        const user = userCredential.user;
+
+        const doc = await db.collection("usuarios").doc(user.uid).get();
+        const userData = doc.data();
+
+        currentUser = {
+            uid: user.uid,
+            ...userData
+        };
+
+        showView('student-panel');
+        cargarDashboardEstudiante();
+
+    } catch (error) {
+        alert("Correo o contraseña incorrectos");
+    }
+    }
+
     }
 };
 
