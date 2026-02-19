@@ -43,7 +43,6 @@
         <div class="tabs">
             <button onclick="switchTab('tab-examenes')">Crear Examen</button>
             <button onclick="switchTab('tab-estudiantes')">Lista de Alumnos</button>
-            <button onclick="switchTab('tab-chat')">Chat Grupal</button>
         </div>
 
         <section id="tab-examenes" class="tab-content">
@@ -63,7 +62,6 @@
                             <th>Estudiante</th>
                             <th>Año/Sec</th>
                             <th>Nota</th>
-                            <th>Estado</th>
                             <th>Acción</th>
                         </tr>
                     </thead>
@@ -92,22 +90,18 @@
             <div id="my-grades"></div>
         </div>
 
-        <div class="support-box">
-            <p>¿Problemas técnicos?</p>
-            <a href="https://wa.me/tu_numero" class="btn-wa">Chat WhatsApp Profesor</a>
-        </div>
         <button onclick="logout()" class="btn-exit">Cerrar Sesión</button>
     </div>
 
     <div id="active-exam-room" class="panel hidden" style="background: #000; color: #fff;">
         <h2 id="current-exam-title">Examen en curso...</h2>
         <div id="timer-display">Tiempo restante: 00:00</div>
-        <div id="questions-container">
-            </div>
+        <div id="questions-container"></div>
         <p style="color: red;">¡ADVERTENCIA! Si sales de esta pantalla, el examen se anulará.</p>
         <button onclick="finalizarExamen()" class="btn-success">Enviar Respuestas</button>
     </div>
 
     <script src="script.js"></script>
 </body>
-</html>
+    </html>
+    
