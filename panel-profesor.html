@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Panel Profesor - Mateedupro2026</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    body {
+      background: linear-gradient(135deg, #0f172a, #1e3a8a);
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      color: white;
+    }
+
+    .panel-container {
+      padding: 30px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .titulo {
+      font-size: 28px;
+      margin-bottom: 5px;
+    }
+
+    .subtitulo {
+      opacity: 0.7;
+      margin-bottom: 30px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      padding: 25px;
+      border-radius: 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.3s;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+    }
+
+    .azul { background: #2563eb; }
+    .verde { background: #16a34a; }
+    .amarillo { background: #facc15; color: black; }
+    .rojo { background: #dc2626; }
+
+    .logout {
+      margin-top: 40px;
+      padding: 12px 20px;
+      background: #334155;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      color: white;
+    }
+
+    .logout:hover {
+      background: #475569;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <div class="panel-container">
+
+    <div class="titulo">Panel Administrativo</div>
+    <div class="subtitulo">Profesor - Control Total del Sistema</div>
+
+    <div class="grid">
+
+      <div class="card azul" onclick="irEstudiantes()">
+        📋 Gestionar Estudiantes
+      </div>
+
+      <div class="card verde" onclick="irRepasos()">
+        📚 Crear Repasos
+      </div>
+
+      <div class="card amarillo" onclick="irEvaluaciones()">
+        📝 Crear Evaluaciones
+      </div>
+
+      <div class="card rojo" onclick="irReset()">
+        🔄 Resetear Actividades
+      </div>
+
+    </div>
+
+    <button class="logout" onclick="cerrarSesion()">
+      Cerrar Sesión
+    </button>
+
+  </div>
+
+  <script type="module">
+
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCqSVoNR5y3kXb-Aihf1UwmvTwo1T0xm_8",
+      authDomain: "mateedupro2026-897fa.firebaseapp.com",
+      projectId: "mateedupro2026-897fa",
+      storageBucket: "mateedupro2026-897fa.firebasestorage.app",
+      messagingSenderId: "242144964491",
+      appId: "1:242144964491:web:04eb900f523a91ef66498e"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        location.replace("login.html");
+      }
+    });
+
+    window.cerrarSesion = async function() {
+      await signOut(auth);
+      location.replace("login.html");
+    }
+
+    window.irEstudiantes = function() {
+      alert("Próximamente módulo estudiantes");
+    }
+
+    window.irRepasos = function() {
+      alert("Próximamente módulo repasos");
+    }
+
+    window.irEvaluaciones = function() {
+      alert("Próximamente módulo evaluaciones");
+    }
+
+    window.irReset = function() {
+      alert("Próximamente módulo reset");
+    }
+
+  </script>
+
+</body>
+    </html>
