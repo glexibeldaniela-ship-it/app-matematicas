@@ -3,22 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MathEduPro 2026</title>
-<link rel="stylesheet" href="style.css">
+<title>Mateedupro2026</title>
+
+<link rel="stylesheet" href="css/style.css">
 </head>
 
-<body class="login-page">
+<body>
 
-<div class="login-container">
+<div class="inicio-container">
 
-    <h1 class="app-title">MathEduPro 2026</h1>
-    <p class="subtitle">Sistema de Evaluación Matemática</p>
+  <h1>Mateedupro2026</h1>
+  <p>Sistema de Evaluación Matemática</p>
 
-    <a href="login.html">
-        <button class="main-btn">Entrar al Sistema</button>
-    </a>
+  <button class="btn-entrar" onclick="entrar()">
+    Entrar al Sistema
+  </button>
 
 </div>
+
+<script>
+function entrar(){
+  window.location.href="login.html";
+}
+</script>
 
 </body>
 </html>
