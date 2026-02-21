@@ -1,103 +1,102 @@
-/* ===============================
-   ESTILO GENERAL - MATEEDUPRO2026
-=================================*/
-
+/* ===== RESET ===== */
 *{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:'Segoe UI', sans-serif;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family: 'Segoe UI', sans-serif;
 }
 
-body{
-  min-height:100vh;
-  background: linear-gradient(135deg, #1e3a8a, #2563eb);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  color:white;
+/* ===== PANTALLA INICIO ===== */
+
+.inicio-body{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background: linear-gradient(135deg,#1e3a8a,#2563eb);
 }
 
-/* ===============================
-   PANTALLA DE INICIO
-=================================*/
-
-.hero{
-  text-align:center;
-  padding:40px;
+.inicio-container{
+text-align:center;
+color:white;
 }
 
-.hero h1{
-  font-size:38px;
-  font-weight:700;
-  margin-bottom:10px;
+/* TITULO GRANDE */
+.titulo-principal{
+font-size:48px;
+letter-spacing:3px; /* Letras corridas */
+font-weight:700;
+text-transform:uppercase;
+text-shadow: 3px 3px 10px rgba(0,0,0,0.4);
+margin-bottom:15px;
 }
 
-.hero p{
-  font-size:18px;
-  opacity:0.9;
-  margin-bottom:30px;
+/* SUBTITULO */
+.subtitulo{
+font-size:18px;
+opacity:0.9;
+margin-bottom:40px;
 }
 
+/* BOTON PRINCIPAL */
 .btn-principal{
-  background:#facc15;
-  color:#111827;
-  padding:15px 35px;
-  border:none;
-  border-radius:12px;
-  font-size:18px;
-  font-weight:bold;
-  cursor:pointer;
-  transition:0.3s;
+padding:15px 35px;
+border:none;
+border-radius:12px;
+background:#facc15;
+color:#000;
+font-weight:bold;
+font-size:16px;
+cursor:pointer;
+transition:0.3s;
+box-shadow:0 6px 15px rgba(0,0,0,0.3);
 }
 
 .btn-principal:hover{
-  background:#fde047;
-  transform:scale(1.05);
+background:#fde047;
+transform:scale(1.05);
 }
 
-/* ===============================
-   FORMULARIOS (LOGIN / REGISTRO)
-=================================*/
+/* ===== FORMULARIOS ===== */
 
 .form-container{
-  background:rgba(255,255,255,0.1);
-  backdrop-filter:blur(10px);
-  padding:40px;
-  border-radius:20px;
-  width:90%;
-  max-width:400px;
-  text-align:center;
-  box-shadow:0 15px 40px rgba(0,0,0,0.3);
+background:white;
+padding:40px;
+border-radius:20px;
+width:90%;
+max-width:400px;
+box-shadow:0 15px 40px rgba(0,0,0,0.2);
+text-align:center;
 }
 
 .form-container h2{
-  margin-bottom:20px;
+margin-bottom:25px;
+color:#1e3a8a;
+letter-spacing:2px;
 }
 
-input{
-  width:100%;
-  padding:14px;
-  margin:10px 0;
-  border-radius:10px;
-  border:none;
-  font-size:16px;
-  outline:none;
+.form-container input{
+width:100%;
+padding:14px;
+margin:10px 0;
+border-radius:10px;
+border:1px solid #ddd;
+font-size:15px;
 }
 
-button{
-  width:100%;
-  padding:14px;
-  margin-top:10px;
-  border:none;
-  border-radius:10px;
-  background:#facc15;
-  color:black;
-  font-weight:bold;
-  cursor:pointer;
-  transition:0.3s;
+.form-container button{
+width:100%;
+padding:14px;
+margin-top:15px;
+border:none;
+border-radius:10px;
+background:#2563eb;
+color:white;
+font-weight:bold;
+cursor:pointer;
+transition:0.3s;
 }
 
-button:hover{
-  background:#fde047;
+.form-container button:hover{
+background:#1e40af;
 }
