@@ -1,78 +1,76 @@
-/* ===== RESET GENERAL ===== */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* ===== RESET ===== */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
 }
 
 /* ===== FONDO GENERAL ===== */
-body {
-    font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg, #1e3a8a, #2563eb);
-    color: white;
+body{
+  font-family:'Segoe UI',sans-serif;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(135deg,#1e3a8a,#2563eb);
+  color:white;
+  text-align:center;
 }
 
-/* ===== PANTALLA LOGIN ===== */
-.login-page {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
-/* ===== CONTENEDOR ===== */
-.login-container {
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(15px);
-    padding: 60px 40px;
-    border-radius: 25px;
-    width: 90%;
-    max-width: 400px;
-    text-align: center;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-    animation: fadeIn 1s ease-in-out;
+/* ===== TARJETA CENTRAL ===== */
+.inicio-container{
+  background:rgba(255,255,255,0.12);
+  backdrop-filter:blur(18px);
+  padding:50px 40px;
+  border-radius:25px;
+  width:90%;
+  max-width:420px;
+  box-shadow:0 20px 50px rgba(0,0,0,0.35);
+  animation:fadeIn 0.8s ease-in-out;
 }
 
 /* ===== TITULO ===== */
-.app-title {
-    font-size: 32px;
-    font-weight: bold;
-    margin-bottom: 10px;
+.inicio-container h1{
+  font-size:32px;
+  margin-bottom:15px;
+  font-weight:bold;
 }
 
-.subtitle {
-    font-size: 15px;
-    opacity: 0.85;
-    margin-bottom: 40px;
+/* ===== SUBTITULO ===== */
+.inicio-container p{
+  font-size:16px;
+  margin-bottom:35px;
+  opacity:0.85;
 }
 
 /* ===== BOTÓN ===== */
-.main-btn {
-    width: 100%;
-    padding: 15px;
-    border-radius: 12px;
-    border: none;
-    background: #facc15;
-    color: black;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
+.btn-entrar{
+  padding:15px;
+  width:100%;
+  border:none;
+  border-radius:15px;
+  font-size:17px;
+  font-weight:bold;
+  background:#facc15;
+  color:black;
+  cursor:pointer;
+  transition:all 0.3s ease;
 }
 
-.main-btn:hover {
-    background: #fde047;
-    transform: scale(1.05);
+.btn-entrar:hover{
+  background:#fde047;
+  transform:translateY(-4px);
+  box-shadow:0 10px 25px rgba(0,0,0,0.3);
 }
 
 /* ===== ANIMACIÓN ===== */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+@keyframes fadeIn{
+  from{
+    opacity:0;
+    transform:translateY(20px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
 }
