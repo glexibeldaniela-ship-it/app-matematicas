@@ -3,29 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css"> <!-- External CSS for styling -->
+    <title>Admin Dashboard</title>
 </head>
 <body>
-    <header>
-        <h1>Professor Dashboard</h1>
-    </header>
-    <main>
-        <section>
-            <h2>Welcome, Professor!</h2>
-            <p>Here you can manage your classes, students, and resources.</p>
+    <div id="sidebar">
+        <h2>Navigation</h2>
+        <ul>
+            <li><a href="#inicio">Inicio</a></li>
+            <li><a href="#configuracion">Configuración</a></li>
+            <li><a href="#estudiantes">Estudiantes</a></li>
+            <li><a href="#repasos">Repasos</a></li>
+            <li><a href="#examen">Examen</a></li>
+            <li><a href="#reportes">Reportes</a></li>
+            <li><a href="#perfil">Perfil</a></li>
+        </ul>
+    </div>
+    <div id="header">
+        <h1>Admin Dashboard</h1>
+        <div id="user-info">
+            <span>Logged in as: glexibeldaniela-ship-it</span>
+        </div>
+    </div>
+    <div id="main-content">
+        <section id="inicio">
+            <h2>Welcome to the Dashboard</h2>
+            <div class="stats-cards">
+                <div class="card">Total Students: 200</div>
+                <div class="card">Active Courses: 10</div>
+                <div class="card">Exams Scheduled: 5</div>
+            </div>
         </section>
-        <section>
-            <h2>Quick Links</h2>
-            <ul>
-                <li><a href="/classes">Manage Classes</a></li>
-                <li><a href="/students">View Students</a></li>
-                <li><a href="/resources">Access Resources</a></li>
-            </ul>
+        <section id="configuracion">
+            <h2>Años/Secciones Setup</h2>
+            <form>
+                <label for="years">Select Year:</label>
+                <input type="text" id="years" name="years">
+                <label for="sections">Define Sections:</label>
+                <input type="text" id="sections" name="sections">
+                <input type="submit" value="Save Configuration">
+            </form>
         </section>
-    </main>
-    <footer>
-        <p>&copy; 2026 Maticas App</p>
-    </footer>
+        <section id="estudiantes">
+            <h2>Student Management</h2>
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Actions</th>
+                </tr>
+                <tr>
+                    <td>John Doe</td>
+                    <td>18</td>
+                    <td><button>Edit</button> <button>Delete</button></td>
+                </tr>
+                <!-- More students can be listed here -->
+            </table>
+        </section>
+        <section id="repasos">
+            <h2>Study Materials</h2>
+            <form>
+                <label for="material-title">Material Title:</label>
+                <input type="text" id="material-title" name="material-title">
+                <label for="material-content">Content:</label>
+                <textarea id="material-content" name="material-content"></textarea>
+                <input type="submit" value="Add Material">
+            </form>
+        </section>
+        <section id="examen">
+            <h2>Exam Creation</h2>
+            <form>
+                <h3>Official Letterhead</h3>
+                <textarea></textarea>
+                <h3>Timer Options</h3>
+                <input type="number" min="1" placeholder="Duration (mins)">
+                <h3>Scheduling</h3>
+                <input type="date" name="exam-date">
+                <h3>Question Types</h3>
+                <input type="text" placeholder="Enter Question">
+                <input type="submit" value="Create Exam">
+            </form>
+        </section>
+        <section id="reportes">
+            <h2>Statistics and Performance Tracking</h2>
+            <div>
+                <p>Performance data will be displayed here.</p>
+            </div>
+        </section>
+        <section id="perfil">
+            <h2>User Profile</h2>
+            <form>
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" value="glexibeldaniela-ship-it" readonly>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email">
+                <input type="submit" value="Update Profile">
+            </form>
+        </section>
+    </div>
+    <script src="script.js"></script> <!-- External JavaScript for functionality -->
 </body>
 </html>
