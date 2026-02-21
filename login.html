@@ -4,27 +4,76 @@
   <meta charset="UTF-8">
   <title>Login - Mateedupro2026</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- Conectar CSS -->
   <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-  <div class="login-container">
-    <h2>Bienvenido a Mateedupro2026</h2>
-    <p>Selecciona una opción</p>
+  <div class="container">
+    <h1>Iniciar Sesión</h1>
 
-    <div class="botones-login">
-      <button onclick="window.location.href='registro-profesor.html'">
-  Profesor
-      </button>
-      <button onclick="irEstudiante()">Estudiante</button>
-    </div>
+    <form id="formLogin">
+      <input type="email" id="correo" placeholder="Correo electrónico" required>
+      <input type="password" id="password" placeholder="Contraseña" required>
+      <button type="submit">Entrar</button>
+    </form>
+
+    <br>
+
+    <button onclick="location.href='registro-profesor.html'">
+      Registrar Profesor
+    </button>
+
   </div>
 
-  <!-- Conectar JS -->
-  <script src="js/app.js"></script>
+  <script type="module">
+
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCqSVoNR5y3kXb-Aihf1UwmvTwo1T0xm_8",
+      authDomain: "mateedupro2026-897fa.firebaseapp.com",
+      projectId: "mateedupro2026-897fa",
+      storageBucket: "mateedupro2026-897fa.firebasestorage.app",
+      messagingSenderId: "242144964491",
+      appId: "1:242144964491:web:04eb900f523a91ef66498e"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const form = document.getElementById("formLogin");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const correo = document.getElementById("correo").value;
+      const password = document.getElementById("password").value;
+
+      try {
+
+        const userCredential = await signInWithEmailAndPassword(auth, correo, password);
+        const user = userCredential.user;
+
+        const snap = await getDoc(doc(db, "usuarios", user.uid));
+        const data = snap.data();
+
+        if (data.role === "admin") {
+          location.replace("panel-profesor.html");
+        } else {
+          location.replace("panel-estudiante.html");
+        }
+
+      } catch (error) {
+        alert("Correo o contraseña incorrectos");
+      }
+
+    });
+
+  </script>
 
 </body>
 </html>
