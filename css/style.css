@@ -1,9 +1,8 @@
-/* ===== RESET ===== */
+/* ===== RESET GENERAL ===== */
 *{
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family: 'Segoe UI', sans-serif;
 }
 
 /* ===== PANTALLA INICIO ===== */
@@ -14,89 +13,63 @@ display:flex;
 justify-content:center;
 align-items:center;
 background: linear-gradient(135deg,#1e3a8a,#2563eb);
+font-family: 'Poppins', sans-serif;
 }
 
+/* CONTENEDOR CENTRAL */
 .inicio-container{
 text-align:center;
 color:white;
+padding:20px;
+animation: fadeIn 1.2s ease-in-out;
 }
 
-/* TITULO GRANDE */
+/* TITULO PRINCIPAL CALIGRAFÍA */
 .titulo-principal{
-font-size:48px;
-letter-spacing:3px; /* Letras corridas */
+font-family: 'Playfair Display', serif;
+font-size:55px;
+letter-spacing:4px;
 font-weight:700;
-text-transform:uppercase;
-text-shadow: 3px 3px 10px rgba(0,0,0,0.4);
+text-shadow: 4px 4px 15px rgba(0,0,0,0.4);
 margin-bottom:15px;
 }
 
 /* SUBTITULO */
 .subtitulo{
-font-size:18px;
-opacity:0.9;
-margin-bottom:40px;
+font-size:20px;
+font-weight:300;
+margin-bottom:50px;
+opacity:0.95;
 }
 
-/* BOTON PRINCIPAL */
+/* BOTÓN MODERNO */
 .btn-principal{
-padding:15px 35px;
+padding:16px 40px;
 border:none;
-border-radius:12px;
+border-radius:15px;
 background:#facc15;
 color:#000;
-font-weight:bold;
-font-size:16px;
+font-weight:600;
+font-size:17px;
 cursor:pointer;
 transition:0.3s;
-box-shadow:0 6px 15px rgba(0,0,0,0.3);
+box-shadow:0 8px 20px rgba(0,0,0,0.3);
 }
 
 .btn-principal:hover{
 background:#fde047;
-transform:scale(1.05);
+transform:translateY(-4px);
+box-shadow:0 12px 25px rgba(0,0,0,0.4);
 }
 
-/* ===== FORMULARIOS ===== */
-
-.form-container{
-background:white;
-padding:40px;
-border-radius:20px;
-width:90%;
-max-width:400px;
-box-shadow:0 15px 40px rgba(0,0,0,0.2);
-text-align:center;
+/* ANIMACIÓN SUAVE */
+@keyframes fadeIn{
+from{
+opacity:0;
+transform:translateY(20px);
 }
-
-.form-container h2{
-margin-bottom:25px;
-color:#1e3a8a;
-letter-spacing:2px;
+to{
+opacity:1;
+transform:translateY(0);
 }
-
-.form-container input{
-width:100%;
-padding:14px;
-margin:10px 0;
-border-radius:10px;
-border:1px solid #ddd;
-font-size:15px;
-}
-
-.form-container button{
-width:100%;
-padding:14px;
-margin-top:15px;
-border:none;
-border-radius:10px;
-background:#2563eb;
-color:white;
-font-weight:bold;
-cursor:pointer;
-transition:0.3s;
-}
-
-.form-container button:hover{
-background:#1e40af;
 }
