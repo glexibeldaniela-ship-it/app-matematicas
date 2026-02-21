@@ -29,4 +29,91 @@ body{
 }
 
 .header p{
-  margin:5px
+  margin:5px 0 0;
+  font-size:14px;
+  opacity:0.8;
+}
+
+/* CONTENIDO */
+.panel{
+  padding:20px;
+}
+
+/* BOTONES */
+.menu-btn{
+  width:100%;
+  padding:18px;
+  margin-bottom:15px;
+  border:none;
+  border-radius:15px;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+/* Colores */
+.estudiantes{ background:#22c55e; color:white; }
+.repasos{ background:#38bdf8; color:white; }
+.evaluaciones{ background:#facc15; color:black; }
+.notas{ background:#a855f7; color:white; }
+.retos{ background:#fb7185; color:white; }
+.cerrar{ background:#111827; color:white; }
+
+.menu-btn:hover{
+  transform:scale(1.03);
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <h1>Mateedupro2026</h1>
+  <p>Panel del Profesor</p>
+</div>
+
+<div class="panel">
+
+  <button class="menu-btn estudiantes" onclick="irModulo('estudiantes')">
+    📚 Gestionar Estudiantes
+  </button>
+
+  <button class="menu-btn repasos" onclick="irModulo('repasos')">
+    📝 Crear / Gestionar Repasos
+  </button>
+
+  <button class="menu-btn evaluaciones" onclick="irModulo('evaluaciones')">
+    🧠 Crear Evaluaciones
+  </button>
+
+  <button class="menu-btn notas" onclick="irModulo('notas')">
+    📊 Ver Notas y Reportes
+  </button>
+
+  <button class="menu-btn retos" onclick="irModulo('retos')">
+    🏆 Retos entre Secciones
+  </button>
+
+  <button class="menu-btn cerrar" onclick="cerrarSesion()">
+    🚪 Cerrar Sesión
+  </button>
+
+</div>
+
+<script>
+
+function irModulo(modulo){
+  alert("Entrando a: " + modulo);
+  // aquí luego conectaremos los módulos reales
+}
+
+function cerrarSesion(){
+  window.location.href="login.html";
+}
+
+</script>
+
+</body>
+</html>
