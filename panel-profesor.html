@@ -105,8 +105,27 @@ body{
 <script>
 
 function irModulo(modulo){
-  alert("Entrando a: " + modulo);
-  // aquí luego conectaremos los módulos reales
+
+  if(modulo === "estudiantes"){
+    window.location.href = "profesores/gestionar-estudiantes.html";
+  }
+
+  if(modulo === "repasos"){
+    window.location.href = "repasos.html";
+  }
+
+  if(modulo === "evaluaciones"){
+    alert("Módulo Evaluaciones en construcción");
+  }
+
+  if(modulo === "notas"){
+    alert("Módulo Notas en construcción");
+  }
+
+  if(modulo === "retos"){
+    alert("Módulo Retos en construcción");
+  }
+
 }
 
 function cerrarSesion(){
