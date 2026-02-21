@@ -41,6 +41,7 @@ button{
   border-radius:10px;
   font-weight:bold;
   cursor:pointer;
+  margin-top:5px;
 }
 
 .guardar{
@@ -48,10 +49,14 @@ button{
   color:white;
 }
 
+.eliminar{
+  background:#ef4444;
+  color:white;
+}
+
 .volver{
   background:#111827;
   color:white;
-  margin-top:10px;
 }
 
 .lista{
@@ -107,7 +112,7 @@ Volver al Panel
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCqSVoNR5y3kXb-Aihf1UwmvTwo1T0xm_8",
@@ -143,7 +148,21 @@ window.guardarEstudiante = async function(){
 
   alert("Estudiante guardado");
 
+  document.getElementById("nombre").value="";
+  document.getElementById("cedula").value="";
+  document.getElementById("correo").value="";
+  document.getElementById("seccion").value="";
+
   cargarEstudiantes();
+}
+
+window.eliminarEstudiante = async function(id){
+
+  if(confirm("¿Seguro que deseas eliminar este estudiante?")){
+    await deleteDoc(doc(db, "estudiantes", id));
+    cargarEstudiantes();
+  }
+
 }
 
 window.volver = function(){
@@ -157,14 +176,18 @@ async function cargarEstudiantes(){
 
   const querySnapshot = await getDocs(collection(db, "estudiantes"));
 
-  querySnapshot.forEach((doc) => {
-    const data = doc.data();
+  querySnapshot.forEach((documento) => {
+
+    const data = documento.data();
 
     lista.innerHTML += `
       <div class="estudiante">
         ${data.nombre} <br>
         C.I: ${data.cedula} <br>
-        Sección: ${data.seccion}
+        Sección: ${data.seccion} <br>
+        <button class="eliminar" onclick="eliminarEstudiante('${documento.id}')">
+          Eliminar
+        </button>
       </div>
     `;
   });
