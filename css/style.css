@@ -1,13 +1,12 @@
-/* ===== RESET GENERAL ===== */
+/* ===== RESET ===== */
 *{
 margin:0;
 padding:0;
 box-sizing:border-box;
 }
 
-/* ===== PANTALLA INICIO ===== */
-
-.inicio-body{
+/* ===== BODY LOGIN ===== */
+.login-body{
 height:100vh;
 display:flex;
 justify-content:center;
@@ -17,59 +16,88 @@ font-family: 'Poppins', sans-serif;
 }
 
 /* CONTENEDOR CENTRAL */
-.inicio-container{
+.login-container{
 text-align:center;
 color:white;
-padding:20px;
-animation: fadeIn 1.2s ease-in-out;
+width:90%;
+max-width:420px;
 }
 
-/* TITULO PRINCIPAL CALIGRAFÍA */
-.titulo-principal{
+/* TITULO BONITO */
+.titulo{
 font-family: 'Playfair Display', serif;
-font-size:55px;
-letter-spacing:4px;
-font-weight:700;
-text-shadow: 4px 4px 15px rgba(0,0,0,0.4);
-margin-bottom:15px;
+font-size:42px;
+letter-spacing:3px;
+margin-bottom:8px;
+text-shadow: 3px 3px 12px rgba(0,0,0,0.4);
 }
 
 /* SUBTITULO */
 .subtitulo{
-font-size:20px;
-font-weight:300;
-margin-bottom:50px;
-opacity:0.95;
+font-size:16px;
+opacity:0.9;
+margin-bottom:30px;
 }
 
-/* BOTÓN MODERNO */
-.btn-principal{
-padding:16px 40px;
+/* CAJA DEL FORMULARIO */
+.form-box{
+background:white;
+padding:35px;
+border-radius:20px;
+box-shadow:0 20px 45px rgba(0,0,0,0.25);
+}
+
+/* TITULO FORM */
+.form-box h2{
+color:#1e3a8a;
+margin-bottom:20px;
+font-size:24px;
+}
+
+/* INPUTS */
+.form-box input{
+width:100%;
+padding:14px;
+margin:10px 0;
+border-radius:10px;
+border:1px solid #ddd;
+font-size:15px;
+}
+
+/* BOTON PRINCIPAL */
+.btn-login{
+width:100%;
+padding:14px;
+margin-top:15px;
 border:none;
-border-radius:15px;
-background:#facc15;
-color:#000;
+border-radius:12px;
+background:#2563eb;
+color:white;
 font-weight:600;
-font-size:17px;
 cursor:pointer;
 transition:0.3s;
-box-shadow:0 8px 20px rgba(0,0,0,0.3);
 }
 
-.btn-principal:hover{
+.btn-login:hover{
+background:#1e40af;
+transform:translateY(-3px);
+}
+
+/* BOTON SECUNDARIO */
+.btn-secundario{
+width:100%;
+padding:12px;
+margin-top:12px;
+border:none;
+border-radius:12px;
+background:#facc15;
+color:black;
+font-weight:600;
+cursor:pointer;
+transition:0.3s;
+}
+
+.btn-secundario:hover{
 background:#fde047;
-transform:translateY(-4px);
-box-shadow:0 12px 25px rgba(0,0,0,0.4);
-}
-
-/* ANIMACIÓN SUAVE */
-@keyframes fadeIn{
-from{
-opacity:0;
-transform:translateY(20px);
-}
-to{
-opacity:1;
-transform:translateY(0);
-}
+transform:translateY(-3px);
 }
