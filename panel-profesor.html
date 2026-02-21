@@ -1,50 +1,32 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Panel del Profesor - Mateedupro2026</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel Profesor</title>
+<link rel="stylesheet" href="css/style.css">
 
-<div class="panel-container">
+<style>
 
-    <!-- Barra lateral -->
-    <aside class="sidebar">
-        <h2>🎓 Mateedupro2026</h2>
-        <ul>
-            <li onclick="cargarModulo('modulos/gestionar-estudiantes.html')">👨‍🎓 Estudiantes</li>
-            <li onclick="cargarModulo('modulos/repasos.html')">📘 Repasos</li>
-            <li onclick="cargarModulo('modulos/evaluaciones.html')">📝 Evaluaciones</li>
-            <li onclick="cargarModulo('modulos/notas.html')">📊 Notas</li>
-            <li onclick="cargarModulo('modulos/retos.html')">🏆 Retos</li>
-            <li onclick="cerrarSesion()">🚪 Cerrar Sesión</li>
-        </ul>
-    </aside>
-
-    <!-- Contenido principal -->
-    <main class="contenido">
-        <h1>Bienvenido Profesor</h1>
-        <p>Selecciona una opción del menú para comenzar.</p>
-
-        <iframe id="visorModulo" style="width:100%; height:500px; border:none;"></iframe>
-    </main>
-
-</div>
-
-<script>
-
-function cargarModulo(ruta) {
-    document.getElementById("visorModulo").src = ruta;
+body{
+  margin:0;
+  font-family:'Segoe UI',sans-serif;
+  background:linear-gradient(135deg,#1e3a8a,#2563eb);
+  color:white;
 }
 
-function cerrarSesion() {
-    alert("Sesión cerrada");
-    window.location.href = "login.html";
+/* ENCABEZADO */
+.header{
+  padding:20px;
+  text-align:center;
+  background:rgba(0,0,0,0.2);
+  backdrop-filter:blur(10px);
 }
 
-</script>
+.header h1{
+  margin:0;
+  font-size:22px;
+}
 
-</body>
-</html>
+.header p{
+  margin:5px
