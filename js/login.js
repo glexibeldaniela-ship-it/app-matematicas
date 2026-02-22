@@ -18,7 +18,7 @@ btn.addEventListener("click", async () => {
     const docSnap = await getDoc(docRef);
 
     if (!docSnap.exists()) {
-      alert("No existe el rol");
+      alert("No existe el rol en Firestore");
       return;
     }
 
@@ -26,14 +26,19 @@ btn.addEventListener("click", async () => {
 
     if (rol === "admin") {
       window.location.href = "administrador/dashboard.html";
+
     } else if (rol === "profesor") {
       window.location.href = "profesor/dashboard.html";
+
+    } else if (rol === "estudiante") {
+      window.location.href = "estudiante/dashboard.html";
+
     } else {
       alert("Rol no válido");
     }
 
   } catch (error) {
-    alert("Error al iniciar sesión");
+    alert("Error al iniciar sesión: " + error.message);
   }
 
 });
