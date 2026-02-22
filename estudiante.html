@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Panel Estudiante</title>
+</head>
+<body>
+
+  <h1>Bienvenido Estudiante 🎓</h1>
+  <button id="logout">Cerrar sesión</button>
+
+  <script type="module">
+    import { auth } from "./js/firebase-config.js";
+    import { signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+    document.getElementById("logout").addEventListener("click", async () => {
+      await signOut(auth);
+      window.location.href = "index.html";
+    });
+  </script>
+
+</body>
+</html>
