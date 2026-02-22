@@ -18,27 +18,15 @@ btn.addEventListener("click", async () => {
     const docSnap = await getDoc(docRef);
 
     if (!docSnap.exists()) {
-      alert("No existe el rol en Firestore");
+      alert("No existe documento en Firestore");
       return;
     }
 
-    const rol = docSnap.data().rol.toLowerCase().trim();
-
-    if (rol === "admin") {
-      window.location.href = "admin.html";
-
-    } else if (rol === "profesor") {
-      window.location.href = "profesor.html";
-
-    } else if (rol === "estudiante") {
-      window.location.href = "estudiante.html";
-
-    } else {
-      alert("Rol no válido: " + rol);
-    }
+    const data = docSnap.data();
+    alert("ROL DETECTADO: " + data.rol);
 
   } catch (error) {
-    alert("Error al iniciar sesión: " + error.message);
+    alert("Error: " + error.message);
   }
 
 });
