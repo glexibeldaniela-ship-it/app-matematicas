@@ -1,3 +1,4 @@
+
 import { auth, db } from "./firebase-config.js";
 import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
@@ -6,8 +7,8 @@ const btn = document.getElementById("login");
 
 btn.addEventListener("click", async () => {
 
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
 
   try {
 
@@ -25,16 +26,16 @@ btn.addEventListener("click", async () => {
     const rol = docSnap.data().rol;
 
     if (rol === "admin") {
-      window.location.href = "administrador/dashboard.html";
+      window.location.href = "admin.html";
 
     } else if (rol === "profesor") {
-      window.location.href = "profesor/dashboard.html";
+      window.location.href = "profesor.html";
 
     } else if (rol === "estudiante") {
-      window.location.href = "estudiante/dashboard.html";
+      window.location.href = "estudiante.html";
 
     } else {
-      alert("Rol no válido");
+      alert("Rol no válido: " + rol);
     }
 
   } catch (error) {
