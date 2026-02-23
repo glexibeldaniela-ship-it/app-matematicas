@@ -5,17 +5,19 @@ import { doc, getDoc, collection, getDocs } from "https://www.gstatic.com/fireba
 const userInfo = document.getElementById("user-info");
 const btnLogout = document.getElementById("btn-logout");
 const tabla = document.getElementById("tabla-usuarios");
-const btnPdf = document.getElementById("btn-descargar-pdf");
+const btnPdf = document.getElementById("btn-pdf"); // ID Corregido para coincidir con el HTML
 
 onAuthStateChanged(auth, async (user) => {
     if (user) {
         const docRef = doc(db, "usuarios", user.uid);
         const docSnap = await getDoc(docRef);
+        
         if (docSnap.exists() && docSnap.data().rol === "admin") {
-            const nombreMatias = docSnap.data().nombreCompleto || docSnap.data().nombre || "Jose";
-            userInfo.innerText = "Conectado como: " + nombreMatias;
+            const nombreAdmin = docSnap.data().nombreCompleto || "Administrador";
+            userInfo.innerText = "Conectado como: " + nombreAdmin;
             cargarUsuarios();
         } else {
+            // Si no es admin, lo sacamos por seguridad
             window.location.href = "../index.html";
         }
     } else {
@@ -25,45 +27,61 @@ onAuthStateChanged(auth, async (user) => {
 
 async function cargarUsuarios() {
     if (!tabla) return;
-    tabla.innerHTML = "";
-    const querySnapshot = await getDocs(collection(db, "usuarios"));
-    querySnapshot.forEach((doc) => {
-        const d = doc.data();
-        const fila = `
-            <tr>
-                <td>${d.cedula || '---'}</td>
-                <td>${d.nombreCompleto || d.nombre || 'Sin nombre'}</td>
-                <td>${d.año || ''} ${d.seccion || ''}</td>
-                <td><span class="rol-tag">${d.rol}</span></td>
-            </tr>
-        `;
-        tabla.innerHTML += fila;
+    tabla.innerHTML = "<tr><td colspan='4'>Cargando base de datos...</td></tr>";
+    
+    try {
+        const querySnapshot = await getDocs(collection(db, "usuarios"));
+        tabla.innerHTML = ""; // Limpiamos el mensaje de carga
+        
+        querySnapshot.forEach((doc) => {
+            const d = doc.data();
+            const fila = `
+                <tr>
+                    <td>${d.cedula || '---'}</td>
+                    <td>${d.nombreCompleto || 'Sin nombre'}</td>
+                    <td>${d.año || ''} ${d.seccion || ''}</td>
+                    <td><span class="rol-tag" style="background:#eee; padding:3px 8px; border-radius:5px; font-size:12px;">${d.rol}</span></td>
+                </tr>
+            `;
+            tabla.innerHTML += fila;
+        });
+    } catch (error) {
+        console.error("Error al cargar usuarios:", error);
+    }
+}
+
+// GENERACIÓN DE PDF PROFESIONAL
+if (btnPdf) {
+    btnPdf.addEventListener("click", () => {
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF();
+
+        // Encabezado del Reporte
+        pdf.setFontSize(16);
+        pdf.text("MateEduPro - Reporte General de Usuarios", 14, 20);
+        
+        pdf.setFontSize(10);
+        pdf.text("Fecha del reporte: " + new Date().toLocaleString(), 14, 30);
+        pdf.line(14, 32, 196, 32);
+
+        // Generar tabla desde el HTML
+        pdf.autoTable({
+            html: '#tabla-datos',
+            startY: 40,
+            theme: 'striped',
+            headStyles: { fillColor: [0, 194, 203] }, // Color Turquesa de tu marca
+            styles: { fontSize: 9 }
+        });
+
+        pdf.save("Reporte_MateEduPro_General.pdf");
     });
 }
 
-// FUNCIÓN PARA GENERAR EL PDF
-btnPdf.addEventListener("click", () => {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-
-    // Membrete (Encabezado)
-    doc.setFontSize(18);
-    doc.text("MateEduPro - Reporte de Usuarios", 14, 20);
-    doc.setFontSize(11);
-    doc.text("Administrador: Jose", 14, 30);
-    doc.text("Fecha: " + new Date().toLocaleDateString(), 14, 35);
-
-    // Crear la tabla en el PDF
-    doc.autoTable({
-        html: '#tabla-datos',
-        startY: 45,
-        theme: 'grid',
-        headStyles: { fillColor: [44, 62, 80] }
+// CERRAR SESIÓN
+if (btnLogout) {
+    btnLogout.addEventListener("click", () => {
+        signOut(auth).then(() => {
+            window.location.href = "../index.html";
+        });
     });
-
-    doc.save("Lista_Usuarios_MateEduPro.pdf");
-});
-
-btnLogout.addEventListener("click", () => {
-    signOut(auth).then(() => { window.location.href = "../index.html"; });
-});
+}
