@@ -2,22 +2,25 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Panel Estudiante</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Estudiante - MateEduPro2026</title>
 </head>
 <body>
 
-  <h1>Bienvenido Estudiante 🎓</h1>
-  <button id="logout">Cerrar sesión</button>
+  <header>
+    <h1 id="saludoEstudiante">Cargando tus datos...</h1>
+    <p>Bienvenido a tu panel de MateEduPro2026</p>
+  </header>
 
-  <script type="module">
-    import { auth } from "./js/firebase-config.js";
-    import { signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  <main>
+    <section>
+      <h3>Mis Tareas</h3>
+      <p>Próximamente verás tus actividades aquí.</p>
+    </section>
+  </main>
 
-    document.getElementById("logout").addEventListener("click", async () => {
-      await signOut(auth);
-      window.location.href = "index.html";
-    });
-  </script>
+  <button id="btnSalir">Cerrar Sesión</button>
 
+  <script type="module" src="./js/estudiante.js"></script>
 </body>
 </html>
