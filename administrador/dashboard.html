@@ -1,1 +1,26 @@
-h
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Admin - MateEduPro</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; background-color: #f0f2f5; }
+        .card { background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        button { background: red; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Bienvenida, Administradora 👑</h1>
+        <p id="user-info">Cargando datos del jefe...</p>
+        <hr>
+        <h3>Control de Usuarios</h3>
+        <p>Aquí verás pronto la lista de profesores y alumnos.</p>
+        
+        <button id="btn-logout">Cerrar Sesión</button>
+    </div>
+
+    <script type="module" src="../js/admin.js"></script>
+</body>
+</html>
