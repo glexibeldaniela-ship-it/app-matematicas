@@ -3,16 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro - MateEduPro</title>
+    <title>MateEduPro - Registro</title>
+    <link rel="stylesheet" href="css/estilos.css">
 </head>
-<body>
-    <h2>Crear Cuenta</h2>
-    <form id="form-registro">
-        <input type="text" id="nombre" placeholder="Nombre completo" required><br><br>
-        <input type="email" id="email" placeholder="Correo electrónico" required><br><br>
-        <input type="password" id="password" placeholder="Contraseña (6 caracteres)" required><br><br>
-        <button type="submit">Registrarme como Estudiante</button>
-    </form>
+<body class="flex-center">
+    <div class="card animate-fade-in">
+        <div class="logo">Crear Cuenta</div>
+        <form id="form-registro">
+            <input type="text" id="cedula" placeholder="Cédula (V-000000)" required>
+            <input type="text" id="nombre1" placeholder="Primer Nombre" required>
+            <input type="text" id="nombre2" placeholder="Segundo Nombre">
+            <input type="text" id="apellido1" placeholder="Primer Apellido" required>
+            <input type="text" id="apellido2" placeholder="Segundo Apellido" required>
+            
+            <select id="tipo-usuario" onchange="const d=document.getElementById('div-est'); d.style.display=(this.value==='estudiante')?'block':'none'">
+                <option value="estudiante">Soy Estudiante</option>
+                <option value="profesor">Soy Profesor</option>
+            </select>
+
+            <div id="div-est">
+                <select id="año">
+                    <option value="1er Año">1er Año</option>
+                    <option value="2do Año">2do Año</option>
+                    <option value="3er Año">3er Año</option>
+                </select>
+                <select id="seccion">
+                    <option value="A">Sección A</option>
+                    <option value="B">Sección B</option>
+                </select>
+            </div>
+
+            <input type="email" id="email" placeholder="Correo" required>
+            <input type="password" id="password" placeholder="Contraseña (Mín. 6)" required>
+            <button type="submit" class="btn-principal">Registrarme</button>
+        </form>
+        <p style="text-align:center"><a href="index.html">Volver al Login</a></p>
+    </div>
     <script type="module" src="js/registro.js"></script>
 </body>
 </html>
