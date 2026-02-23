@@ -1,11 +1,8 @@
-// 🔥 CONFIGURACIÓN FIREBASE COMPLETA
-
-// Importaciones necesarias
+// 🔥 CONFIGURACIÓN FIREBASE UNIFICADA
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-// Configuración de tu proyecto
 const firebaseConfig = {
   apiKey: "AIzaSyCqSVoNR5y3kXb-Aihf1UwmvTwo1T0xm_8",
   authDomain: "mateedupro2026-897fa.firebaseapp.com",
@@ -15,12 +12,6 @@ const firebaseConfig = {
   appId: "1:242144964491:web:04eb900f523a91ef66498e"
 };
 
-// Inicializar Firebase
 const app = initializeApp(firebaseConfig);
-
-// Inicializar servicios
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-// Exportar para usar en otros archivos
-export { auth, db };
+export const auth = getAuth(app);
+export const db = getFirestore(app);
