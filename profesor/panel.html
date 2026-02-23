@@ -1,1 +1,29 @@
-ff
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Profesor - MateEduPro</title>
+    <link rel="stylesheet" href="../css/estilos.css">
+</head>
+<body>
+    <div class="card animate-fade-in" style="max-width: 800px; margin: 20px auto;">
+        <div class="logo">Escritorio del Docente ✏️</div>
+        <p id="profe-nombre">Bienvenido, Profesor</p>
+        <hr>
+        <h3>Crear Nueva Evaluación</h3>
+        <input type="text" id="titulo-tema" placeholder="Título del Tema">
+        <textarea id="contenido-repaso" placeholder="Contenido de Repaso Obligatorio" style="width:100%; border-radius:10px; padding:10px;"></textarea>
+        <label>Tiempo del Examen (minutos):</label>
+        <input type="number" id="tiempo-examen" value="20">
+        
+        <button class="btn-principal" onclick="alert('Tema guardado con éxito')">Activar Evaluación</button>
+        
+        <div style="margin-top:20px;">
+            <a href="evaluar.html" class="btn-principal" style="background:var(--turquesa-oscuro); text-decoration:none; display:block; text-align:center;">Ir a Calificar (1-20)</a>
+        </div>
+        <button id="btn-logout" class="btn-principal" style="background:#e74c3c; margin-top:10px;">Salir</button>
+    </div>
+    <script type="module" src="../js/profesor.js"></script>
+</body>
+</html>
