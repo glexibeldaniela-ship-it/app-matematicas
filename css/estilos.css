@@ -1,30 +1,73 @@
+/* css/estilos.css */
 :root {
     --turquesa: #00c2cb;
     --turquesa-oscuro: #008a91;
     --blanco: #ffffff;
     --gris-claro: #f4f7f6;
     --texto: #2c3e50;
+    --rojo: #e74c3c;
 }
 
-body { font-family: 'Segoe UI', sans-serif; background-color: var(--gris-claro); color: var(--texto); margin: 0; }
-.flex-center { display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+* { box-sizing: border-box; }
 
-.card { background: var(--blanco); padding: 25px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 90%; max-width: 400px; border-top: 5px solid var(--turquesa); }
+body { 
+    font-family: 'Segoe UI', Roboto, sans-serif; 
+    background-color: var(--gris-claro); 
+    color: var(--texto); 
+    margin: 0; 
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
 
-.logo { font-size: 24px; font-weight: bold; color: var(--turquesa); text-align: center; margin-bottom: 20px; }
+/* Ajuste para que en PC no se vea gigante y en móvil ocupe todo */
+.card { 
+    background: var(--blanco); 
+    padding: 20px; 
+    border-radius: 15px; 
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08); 
+    width: 95%; 
+    max-width: 500px; 
+    margin: 20px auto;
+    border-top: 6px solid var(--turquesa); 
+}
 
-input, select { width: 100%; padding: 12px; margin: 10px 0; border: 2px solid #eee; border-radius: 10px; box-sizing: border-box; transition: 0.3s; }
-input:focus { border-color: var(--turquesa); outline: none; }
+/* Optimización de botones para dedos (Mobile) */
+.btn-principal { 
+    width: 100%; 
+    background: var(--turquesa); 
+    color: white; 
+    padding: 16px; /* Más alto para móviles */
+    border: none; 
+    border-radius: 12px; 
+    font-weight: bold; 
+    font-size: 16px;
+    cursor: pointer; 
+    transition: 0.2s;
+    margin-top: 10px;
+}
 
-.btn-principal { width: 100%; background: var(--turquesa); color: white; padding: 14px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; transition: 0.3s; transform: scale(1); }
-.btn-principal:hover { background: var(--turquesa-oscuro); transform: scale(1.02); }
+.btn-principal:active { transform: scale(0.98); }
 
-/* Animaciones */
-.animate-fade-in { animation: fadeIn 0.5s ease-in; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+/* Tablas responsivas: permite scroll lateral en móvil */
+.tabla-contenedor { 
+    width: 100%; 
+    overflow-x: auto; 
+    -webkit-overflow-scrolling: touch;
+    margin-top: 15px;
+    border-radius: 8px;
+}
 
-/* Tabla responsiva */
-.tabla-contenedor { width: 100%; overflow-x: auto; margin-top: 15px; }
-table { width: 100%; border-collapse: collapse; min-width: 500px; }
+table { width: 100%; border-collapse: collapse; min-width: 400px; font-size: 14px; }
 th { background: var(--turquesa); color: white; padding: 12px; text-align: left; }
 td { padding: 12px; border-bottom: 1px solid #eee; }
+
+/* Inputs grandes para móvil */
+input, select, textarea {
+    width: 100%;
+    padding: 14px;
+    margin: 8px 0;
+    border: 2px solid #edf2f7;
+    border-radius: 10px;
+    font-size: 16px; /* Evita zoom automático en iPhone */
+}
