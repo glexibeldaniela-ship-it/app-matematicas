@@ -3,43 +3,33 @@ import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/f
 import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 onAuthStateChanged(auth, async (user) => {
-    const url = window.location.href;
+    const path = window.location.pathname;
 
     if (user) {
         try {
             const docSnap = await getDoc(doc(db, "usuarios", user.uid));
-            
+
             if (docSnap.exists()) {
                 const rol = docSnap.data().rol;
-                console.log("Rol detectado:", rol);
-
-                // REDIRECCIÓN PARA MÓVILES (Rutas flexibles)
-                if (rol === "admin" && !url.includes("administrador")) {
-                    window.location.assign("../administrador/dashboard.html");
+                
+                // Redirección inteligente basada en rol y ubicación actual
+                if (rol === "admin" && !path.includes("/administrador/")) {
+                    window.location.href = "/administrador/administrador.html";
                 } 
-                else if (rol === "profesor" && !url.includes("profesor")) {
-                    // Si estamos en la raíz, entramos a la carpeta profesor
-                    if(url.includes("index.html") || url.endsWith("/")) {
-                        window.location.assign("profesor/panel.html");
-                    } else {
-                        window.location.assign("../profesor/panel.html");
-                    }
+                else if (rol === "profesor" && !path.includes("/profesor/")) {
+                    window.location.href = "/profesor/panel.html";
                 } 
-                else if (rol === "estudiante" && !url.includes("estudiante")) {
-                    if(url.includes("index.html") || url.endsWith("/")) {
-                        window.location.assign("estudiante/aula.html");
-                    } else {
-                        window.location.assign("../estudiante/aula.html");
-                    }
+                else if (rol === "estudiante" && !path.includes("/estudiantes/")) {
+                    window.location.href = "/estudiantes/aula.html";
                 }
             }
         } catch (error) {
-            console.error("Error en el portero:", error);
+            console.error("Error verificando sesión:", error);
         }
     } else {
-        // Si no hay sesión y trata de entrar a carpetas, al login
-        if (url.includes("profesor") || url.includes("estudiante") || url.includes("administrador")) {
-            window.location.assign("../index.html");
+        // Si no hay sesión y el usuario intenta entrar a una carpeta privada, va al login
+        if (path.includes("/profesor/") || path.includes("/estudiantes/") || path.includes("/administrador/")) {
+            window.location.href = "/index.html";
         }
     }
 });
