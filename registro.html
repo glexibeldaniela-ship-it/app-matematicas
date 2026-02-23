@@ -5,34 +5,34 @@
   <title>Registro Estudiante</title>
 </head>
 <body>
-
   <h2>Registro de Estudiante</h2>
-
   <input type="text" id="nombre" placeholder="Nombre completo"><br><br>
   <input type="email" id="email" placeholder="Correo"><br><br>
   <input type="password" id="password" placeholder="Contraseña"><br><br>
-
   <button id="btnRegistro">Registrarse</button>
 
   <script type="module">
-
     import { auth, db } from "./js/firebase-config.js";
-    import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
     import { doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
     const btn = document.getElementById("btnRegistro");
 
     btn.addEventListener("click", async () => {
+      const nombre = document.getElementById("nombre").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
 
-      const nombre = document.getElementById("nombre").value;
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
+      if(!nombre || !email || !password) return alert("Por favor, llena todos los campos");
 
       try {
-
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
 
+        // Automatización: Guarda el nombre en el perfil del usuario
+        await updateProfile(user, { displayName: nombre });
+
+        // Guarda el rol y datos en Firestore
         await setDoc(doc(db, "usuarios", user.uid), {
           nombre: nombre,
           email: email,
@@ -40,16 +40,11 @@
         });
 
         alert("Estudiante registrado correctamente");
-
         window.location.href = "index.html";
-
       } catch (error) {
         alert("Error: " + error.message);
       }
-
     });
-
   </script>
-
 </body>
 </html>
