@@ -1,71 +1,43 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Registro - MateEduPro</title>
-    <style>
-        body { font-family: sans-serif; background-color: #f0f2f5; padding: 15px; margin: 0; }
-        .contenedor { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); max-width: 400px; margin: auto; }
-        h2 { text-align: center; color: #1a73e8; }
-        input, select { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; font-size: 16px; } /* Tamaño de letra cómodo para móvil */
-        button { width: 100%; background-color: #1a73e8; color: white; padding: 14px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: bold; margin-top: 10px; }
-        .grupo { margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
-        label { font-size: 14px; font-weight: bold; color: #555; }
-    </style>
-</head>
-<body>
+import { auth, db } from "./firebase-config.js";
+import { createUserWithEmailAndPassword, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-<div class="contenedor">
-    <h2>Crear Cuenta</h2>
-    <form id="form-registro">
-        <div class="grupo">
-            <label>Datos Personales</label>
-            <input type="text" id="cedula" placeholder="Cédula de Identidad" required>
-            <input type="text" id="nombre1" placeholder="Primer Nombre" required>
-            <input type="text" id="nombre2" placeholder="Segundo Nombre">
-            <input type="text" id="apellido1" placeholder="Primer Apellido" required>
-            <input type="text" id="apellido2" placeholder="Segundo Apellido" required>
-        </div>
+const form = document.getElementById("form-registro");
 
-        <div class="grupo">
-            <label>Rol y Ubicación</label>
-            <select id="tipo-usuario" onchange="cambiarVista()">
-                <option value="estudiante">Soy Estudiante</option>
-                <option value="profesor">Soy Profesor</option>
-            </select>
-            
-            <div id="seccion-estudiante">
-                <select id="año">
-                    <option value="1">1er Año</option>
-                    <option value="2">2do Año</option>
-                    <option value="3">3er Año</option>
-                </select>
-                <select id="seccion">
-                    <option value="A">Sección A</option>
-                    <option value="B">Sección B</option>
-                </select>
-            </div>
-        </div>
+form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    
+    const cedula = document.getElementById("cedula").value;
+    const n1 = document.getElementById("nombre1").value;
+    const n2 = document.getElementById("nombre2").value;
+    const a1 = document.getElementById("apellido1").value;
+    const a2 = document.getElementById("apellido2").value;
+    const email = document.getElementById("email").value;
+    const pass = document.getElementById("password").value;
+    const rolSeleccionado = document.getElementById("tipo-usuario").value;
+    const año = document.getElementById("año").value;
+    const seccion = document.getElementById("seccion").value;
 
-        <div class="grupo">
-            <label>Seguridad</label>
-            <input type="email" id="email" placeholder="Correo electrónico" required>
-            <input type="password" id="password" placeholder="Contraseña (mínimo 6 caracteres)" required>
-        </div>
+    try {
+        const credencial = await createUserWithEmailAndPassword(auth, email, pass);
+        const user = credencial.user;
 
-        <button type="submit">Registrarme</button>
-    </form>
-</div>
+        await sendEmailVerification(user);
 
-<script>
-    // Función para ocultar Año/Sección si es Profesor
-    function cambiarVista() {
-        const rol = document.getElementById('tipo-usuario').value;
-        const divEstudiante = document.getElementById('seccion-estudiante');
-        divEstudiante.style.display = (rol === 'estudiante') ? 'block' : 'none';
+        await setDoc(doc(db, "usuarios", user.uid), {
+            cedula: cedula,
+            nombreCompleto: `${n1} ${n2} ${a1} ${a2}`,
+            correo: email,
+            rol: rolSeleccionado,
+            año: rolSeleccionado === "estudiante" ? año : "N/A",
+            seccion: rolSeleccionado === "estudiante" ? seccion : "N/A",
+            notas: { lapso1: 0, lapso2: 0, lapso3: 0, promedioFinal: 0 },
+            fechaRegistro: new Date()
+        });
+
+        alert("¡Registro exitoso! Revisa tu correo.");
+        window.location.href = "index.html";
+    } catch (error) {
+        alert("Error: " + error.message);
     }
-</script>
-<script type="module" src="js/registro.js"></script>
-
-</body>
-</html>
+});
