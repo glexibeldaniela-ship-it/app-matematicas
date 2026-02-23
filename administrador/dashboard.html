@@ -5,34 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel Admin - MateEduPro</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; padding: 20px; background-color: #f4f7f6; }
-        .card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); max-width: 800px; margin: auto; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        body { font-family: 'Segoe UI', sans-serif; padding: 10px; background-color: #f4f7f6; margin: 0; }
+        .card { background: white; padding: 15px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); max-width: 100%; margin: auto; }
+        
+        /* CONTENEDOR MÁGICO PARA CELULARES */
+        .tabla-contenedor { 
+            width: 100%; 
+            overflow-x: auto; /* Permite deslizar a los lados */
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        table { width: 100%; border-collapse: collapse; min-width: 600px; } /* Evita que se amontone todo */
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; font-size: 14px; }
         th { background-color: #2c3e50; color: white; }
-        .btn-logout { background: #e74c3c; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; float: right; }
-        .rol-tag { background: #3498db; color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.8em; }
+        
+        .btn-logout { background: #e74c3c; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer; float: right; font-size: 12px; }
+        .rol-tag { background: #3498db; color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.8em; font-weight: bold; }
+        
+        h1 { font-size: 1.5rem; }
     </style>
 </head>
 <body>
     <div class="card">
         <button id="btn-logout" class="btn-logout">Cerrar Sesión</button>
-        <h1>Panel de Administración 👑</h1>
-        <p id="user-info">Cargando...</p>
+        <h1>Panel Admin 👑</h1>
+        <p id="user-info" style="font-weight: bold; color: #2c3e50;">Cargando...</p>
         <hr>
+
+        <h3>Control de Usuarios</h3>
         
-        <h3>Lista de Usuarios Registrados</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Correo</th>
-                    <th>Rol</th>
-                </tr>
-            </thead>
-            <tbody id="tabla-usuarios">
-                </tbody>
-        </table>
+        <div class="tabla-contenedor">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Cédula</th>
+                        <th>Nombre</th>
+                        <th>Año/Sec</th>
+                        <th>Rol</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-usuarios">
+                    </tbody>
+            </table>
+        </div>
     </div>
 
     <script type="module" src="../js/admin.js"></script>
