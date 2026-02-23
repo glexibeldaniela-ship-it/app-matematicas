@@ -4,32 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel Admin - MateEduPro</title>
+    <link rel="stylesheet" href="../css/estilos.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
-    
-    <style>
-        body { font-family: 'Segoe UI', sans-serif; padding: 10px; background-color: #f4f7f6; margin: 0; }
-        .card { background: white; padding: 15px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); max-width: 100%; margin: auto; }
-        .tabla-contenedor { width: 100%; overflow-x: auto; border: 1px solid #ddd; border-radius: 8px; margin-top: 10px; }
-        table { width: 100%; border-collapse: collapse; min-width: 600px; }
-        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; font-size: 14px; }
-        th { background-color: #2c3e50; color: white; }
-        .btn-logout { background: #e74c3c; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer; float: right; font-size: 12px; }
-        .btn-pdf { background: #27ae60; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; margin-top: 10px; font-weight: bold; width: 100%; }
-        .rol-tag { background: #3498db; color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.8em; font-weight: bold; }
-    </style>
 </head>
 <body>
-    <div class="card">
-        <button id="btn-logout" class="btn-logout">Cerrar Sesión</button>
-        <h1>Panel Admin 👑</h1>
-        <p id="user-info" style="font-weight: bold; color: #2c3e50;">Conectado como: Jose</p>
-        <hr>
-
-        <h3>Control de Usuarios</h3>
+    <div class="card animate-fade-in" style="max-width: 800px; margin: 20px auto;">
+        <div class="logo">Panel Administrador 👑</div>
+        <p id="user-info">Cargando...</p>
+        <button id="btn-pdf" class="btn-principal" style="background: #27ae60;">📥 Descargar PDF General</button>
         
-        <button id="btn-descargar-pdf" class="btn-pdf">📥 Descargar Lista en PDF</button>
-
         <div class="tabla-contenedor">
             <table id="tabla-datos">
                 <thead>
@@ -43,8 +27,8 @@
                 <tbody id="tabla-usuarios"></tbody>
             </table>
         </div>
+        <button id="btn-logout" class="btn-principal" style="margin-top:20px; background:#e74c3c;">Cerrar Sesión</button>
     </div>
-
     <script type="module" src="../js/admin.js"></script>
 </body>
 </html>
