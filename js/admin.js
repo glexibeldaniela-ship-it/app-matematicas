@@ -5,16 +5,15 @@ import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase
 const userInfo = document.getElementById("user-info");
 const btnLogout = document.getElementById("btn-logout");
 
-// 1. Verificar que realmente eres tú
 onAuthStateChanged(auth, async (user) => {
     if (user) {
         const docRef = doc(db, "usuarios", user.uid);
         const docSnap = await getDoc(docRef);
         
         if (docSnap.exists() && docSnap.data().rol === "admin") {
-            userInfo.innerText = "Conectada como: " + docSnap.data().nombre;
+            // AQUÍ ESTABA EL ERROR, YA LO CAMBIÉ A "Conectado"
+            userInfo.innerText = "Conectado como: " + docSnap.data().nombre;
         } else {
-            // Si alguien intenta entrar de colado, lo sacamos
             window.location.href = "../index.html";
         }
     } else {
@@ -22,7 +21,6 @@ onAuthStateChanged(auth, async (user) => {
     }
 });
 
-// 2. Botón para salir
 btnLogout.addEventListener("click", () => {
     signOut(auth).then(() => {
         window.location.href = "../index.html";
