@@ -1,1 +1,37 @@
-ddd
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calificar - MateEduPro</title>
+    <link rel="stylesheet" href="../css/estilos.css">
+</head>
+<body>
+    <div class="card animate-fade-in" style="max-width: 900px; margin: 20px auto;">
+        <div class="logo">Calificador de Lapsos 📊</div>
+        <p style="text-align:center; color:var(--turquesa-oscuro);">Escala del 01 al 20</p>
+        
+        <div class="tabla-contenedor">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Estudiante / Cédula</th>
+                        <th>1er Lapso</th>
+                        <th>2do Lapso</th>
+                        <th>3er Lapso</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-estudiantes">
+                    </tbody>
+            </table>
+        </div>
+
+        <div style="margin-top:20px;">
+            <a href="panel.html" class="btn-principal" style="background:#95a5a6; text-decoration:none; display:block; text-align:center;">Volver al Panel</a>
+        </div>
+    </div>
+
+    <script type="module" src="../js/profesor.js"></script>
+</body>
+</html>
