@@ -10,10 +10,9 @@ onAuthStateChanged(auth, async (user) => {
     if (user) {
         const docRef = doc(db, "usuarios", user.uid);
         const docSnap = await getDoc(docRef);
-        
         if (docSnap.exists() && docSnap.data().rol === "admin") {
-            userInfo.innerText = "Conectado como: " + docSnap.data().nombre;
-            cargarUsuarios(); // <--- Llamamos a la función para ver a la gente
+            userInfo.innerText = "Conectado como: " + docSnap.data().nombreCompleto;
+            cargarUsuarios();
         } else {
             window.location.href = "../index.html";
         }
@@ -22,18 +21,18 @@ onAuthStateChanged(auth, async (user) => {
     }
 });
 
-// FUNCIÓN PARA TRAER A TODOS LOS USUARIOS DE FIREBASE
 async function cargarUsuarios() {
-    tabla.innerHTML = ""; // Limpiar tabla
+    tabla.innerHTML = "";
     const querySnapshot = await getDocs(collection(db, "usuarios"));
     
     querySnapshot.forEach((doc) => {
-        const datos = doc.data();
+        const d = doc.data();
         const fila = `
             <tr>
-                <td>${datos.nombre}</td>
-                <td>${datos.correo}</td>
-                <td><span class="rol-tag">${datos.rol}</span></td>
+                <td>${d.cedula || '---'}</td>
+                <td>${d.nombreCompleto || d.nombre}</td>
+                <td>${d.año || ''} ${d.seccion || ''}</td>
+                <td><span class="rol-tag">${d.rol}</span></td>
             </tr>
         `;
         tabla.innerHTML += fila;
