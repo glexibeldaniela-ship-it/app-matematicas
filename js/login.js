@@ -23,7 +23,7 @@ form.addEventListener("submit", async (e) => {
       const data = docSnap.data();
 
       if (data.rol === "estudiante") {
-        window.location.href = "estudiantes/aula.html";
+        window.location.href = "estudiante/aula.html";
       }
 
       if (data.rol === "profesor") {
