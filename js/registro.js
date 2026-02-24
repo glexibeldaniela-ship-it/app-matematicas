@@ -3,6 +3,16 @@ import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebase
 import { doc, setDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const form = document.getElementById("registroForm");
+const rolSelect = document.getElementById("rol");
+const datosAcademicos = document.getElementById("datosAcademicos");
+
+rolSelect.addEventListener("change", () => {
+  if (rolSelect.value === "estudiante") {
+    datosAcademicos.style.display = "block";
+  } else {
+    datosAcademicos.style.display = "none";
+  }
+});
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -13,22 +23,29 @@ form.addEventListener("submit", async (e) => {
   const cedula = document.getElementById("cedula").value;
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
-  const rol = document.getElementById("rol").value;
+  const rol = rolSelect.value;
+  const anio = document.getElementById("anio").value;
+  const seccion = document.getElementById("seccion").value;
 
   if (!rol) {
     alert("Seleccione un tipo de usuario");
     return;
   }
 
+  if (rol === "estudiante" && (!anio || !seccion)) {
+    alert("Seleccione Año y Sección");
+    return;
+  }
+
   try {
 
-    // 🔒 Verificar si ya existe profesor
+    // 🔒 Verificar profesor único
     if (rol === "profesor") {
       const querySnapshot = await getDocs(collection(db, "usuarios"));
       let profesorExiste = false;
 
-      querySnapshot.forEach((doc) => {
-        if (doc.data().rol === "profesor") {
+      querySnapshot.forEach((docSnap) => {
+        if (docSnap.data().rol === "profesor") {
           profesorExiste = true;
         }
       });
@@ -39,26 +56,30 @@ form.addEventListener("submit", async (e) => {
       }
     }
 
-    // 🔥 Crear usuario en Auth
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
 
-    // 💾 Guardar en Firestore
-    await setDoc(doc(db, "usuarios", user.uid), {
+    let datosUsuario = {
       primerNombre,
       segundoNombre,
       apellidos,
       cedula,
       email,
       rol
-    });
+    };
+
+    if (rol === "estudiante") {
+      datosUsuario.anio = anio;
+      datosUsuario.seccion = seccion;
+    }
+
+    await setDoc(doc(db, "usuarios", user.uid), datosUsuario);
 
     alert("Registro exitoso");
 
-    // 🚀 Redirección automática
     if (rol === "estudiante") {
       window.location.href = "./estudiante/aula.html";
-    } else if (rol === "profesor") {
+    } else {
       window.location.href = "./profesor/panel.html";
     }
 
