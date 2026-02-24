@@ -1,6 +1,5 @@
-import { db, storage } from "./firebase-config.js";
+import { db } from "./firebase-config.js";
 import { collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-import { ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
 const form = document.getElementById("guiaForm");
 const mensaje = document.getElementById("mensaje");
@@ -12,26 +11,25 @@ form.addEventListener("submit", async (e) => {
   const anio = document.getElementById("anio").value;
   const seccion = document.getElementById("seccion").value;
   const contenidoTexto = document.getElementById("contenidoTexto").value;
-  const pdfFile = document.getElementById("pdfFile").files[0];
+  let pdfLink = document.getElementById("pdfLink").value;
 
   try {
 
-    let pdfURL = "";
-
-    // 📄 Si hay PDF lo subimos
-    if (pdfFile) {
-      const storageRef = ref(storage, "guias/" + Date.now() + "_" + pdfFile.name);
-      await uploadBytes(storageRef, pdfFile);
-      pdfURL = await getDownloadURL(storageRef);
+    // Convertir enlace de Drive a descarga directa
+    if (pdfLink.includes("drive.google.com")) {
+      const match = pdfLink.match(/\/d\/(.*?)\//);
+      if (match && match[1]) {
+        const fileId = match[1];
+        pdfLink = `https://drive.google.com/uc?export=download&id=${fileId}`;
+      }
     }
 
-    // 💾 Guardar guía en Firestore
     await addDoc(collection(db, "guias"), {
-      titulo,
-      anio,
-      seccion,
-      contenidoTexto,
-      pdfURL,
+      titulo: titulo,
+      anio: anio,
+      seccion: seccion,
+      contenidoTexto: contenidoTexto,
+      pdfURL: pdfLink || "",
       fechaCreacion: serverTimestamp(),
       estado: "publicada"
     });
@@ -41,6 +39,7 @@ form.addEventListener("submit", async (e) => {
 
   } catch (error) {
     mensaje.innerHTML = "❌ Error: " + error.message;
+    console.error(error);
   }
 
 });
