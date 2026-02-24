@@ -9,14 +9,24 @@
   <h2>Registro de Usuario</h2>
 
   <form id="registroForm">
-    <input type="text" id="nombre" placeholder="Nombre" required><br><br>
+    <input type="text" id="primerNombre" placeholder="Primer Nombre" required><br><br>
+    <input type="text" id="segundoNombre" placeholder="Segundo Nombre"><br><br>
+    <input type="text" id="apellidos" placeholder="Apellidos" required><br><br>
+    <input type="text" id="cedula" placeholder="Cédula" required><br><br>
     <input type="email" id="email" placeholder="Correo" required><br><br>
     <input type="password" id="password" placeholder="Contraseña" required><br><br>
+
+    <label>Tipo de Usuario:</label><br>
+    <select id="rol" required>
+      <option value="">Seleccione</option>
+      <option value="estudiante">Estudiante</option>
+      <option value="profesor">Profesor</option>
+    </select><br><br>
+
     <button type="submit">Registrarse</button>
   </form>
 
-  <script type="module" src="js/firebase-config.js"></script>
-  <script type="module" src="js/registro.js"></script>
+  <script type="module" src="./js/registro.js"></script>
 
 </body>
 </html>
