@@ -1,30 +1,69 @@
 import { auth, db } from "./firebase-config.js";
 import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { doc, setDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const form = document.getElementById("registroForm");
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const nombre = document.getElementById("nombre").value;
+  const primerNombre = document.getElementById("primerNombre").value;
+  const segundoNombre = document.getElementById("segundoNombre").value;
+  const apellidos = document.getElementById("apellidos").value;
+  const cedula = document.getElementById("cedula").value;
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
+  const rol = document.getElementById("rol").value;
+
+  if (!rol) {
+    alert("Seleccione un tipo de usuario");
+    return;
+  }
 
   try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
 
-    await setDoc(doc(db, "usuarios", userCredential.user.uid), {
-      nombre: nombre,
-      email: email,
-      rol: "estudiante"
+    // 🔒 Verificar si ya existe profesor
+    if (rol === "profesor") {
+      const querySnapshot = await getDocs(collection(db, "usuarios"));
+      let profesorExiste = false;
+
+      querySnapshot.forEach((doc) => {
+        if (doc.data().rol === "profesor") {
+          profesorExiste = true;
+        }
+      });
+
+      if (profesorExiste) {
+        alert("Ya existe un profesor registrado");
+        return;
+      }
+    }
+
+    // 🔥 Crear usuario en Auth
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+
+    // 💾 Guardar en Firestore
+    await setDoc(doc(db, "usuarios", user.uid), {
+      primerNombre,
+      segundoNombre,
+      apellidos,
+      cedula,
+      email,
+      rol
     });
 
-    alert("Usuario registrado correctamente");
-    console.log("✅ Usuario creado y guardado en Firestore");
+    alert("Registro exitoso");
+
+    // 🚀 Redirección automática
+    if (rol === "estudiante") {
+      window.location.href = "./estudiante/aula.html";
+    } else if (rol === "profesor") {
+      window.location.href = "./profesor/panel.html";
+    }
 
   } catch (error) {
-    console.error("❌ Error:", error.message);
-    alert(error.message);
+    alert("Error: " + error.message);
   }
+
 });
