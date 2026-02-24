@@ -1,48 +1,35 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Panel Profesor</title>
-</head>
-<body>
+<h2>Publicar Guía</h2>
 
-  <h2>Panel del Profesor</h2>
+<form id="guiaForm">
 
-  <h3>📚 Crear Nueva Guía</h3>
+  <label>Título:</label><br>
+  <input type="text" id="titulo" required><br><br>
 
-  <form id="guiaForm">
-    <input type="text" id="titulo" placeholder="Título de la guía" required><br><br>
+  <label>Año:</label><br>
+  <select id="anio" required>
+    <option value="">Seleccione</option>
+    <option value="1">1er Año</option>
+    <option value="2">2do Año</option>
+    <option value="3">3er Año</option>
+  </select><br><br>
 
-    <label>Año:</label><br>
-    <select id="anio" required>
-      <option value="">Seleccione Año</option>
-      <option value="1">1er Año</option>
-      <option value="2">2do Año</option>
-      <option value="3">3er Año</option>
-    </select><br><br>
+  <label>Sección:</label><br>
+  <select id="seccion" required>
+    <option value="">Seleccione</option>
+    <option value="A">A</option>
+    <option value="B">B</option>
+  </select><br><br>
 
-    <label>Sección:</label><br>
-    <select id="seccion" required>
-      <option value="">Seleccione Sección</option>
-      <option value="A">A</option>
-      <option value="B">B</option>
-    </select><br><br>
+  <label>Contenido escrito:</label><br>
+  <textarea id="contenidoTexto" rows="5"></textarea><br><br>
 
-    <label>Contenido (Texto):</label><br>
-    <textarea id="contenidoTexto" rows="6" cols="40" placeholder="Escriba la guía aquí..."></textarea><br><br>
+  <label>Enlace del PDF (Google Drive):</label><br>
+  <input type="text" id="pdfLink" placeholder="Pegue aquí el enlace de Google Drive"><br><br>
 
-    <label>Subir PDF (opcional):</label><br>
-    <input type="file" id="pdfFile" accept="application/pdf"><br><br>
+  <button type="submit">Publicar</button>
 
-    <button type="submit">Publicar Guía</button>
-  </form>
+</form>
 
-  <hr>
+<p id="mensaje"></p>
 
-  <div id="mensaje"></div>
-
-  <script type="module" src="../js/guia.js"></script>
-  <script type="module" src="../js/profesor.js"></script>
-
-</body>
-</html>
+<script type="module" src="../js/guia.js"></script>
