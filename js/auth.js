@@ -1,29 +1,25 @@
-import { auth, db } from "./firebase-config.js";
+import { auth } from "./firebase-config.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { db } from "./firebase-config.js";
 
 onAuthStateChanged(auth, async (user) => {
-    if (user) {
-        const docSnap = await getDoc(doc(db, "usuarios", user.uid));
-        if (docSnap.exists()) {
-            const datos = docSnap.data();
-            const rol = datos.rol; // Lee "admin" de tu imagen
-            const path = window.location.pathname;
+  if (user) {
+    const docRef = doc(db, "usuarios", user.uid);
+    const docSnap = await getDoc(docRef);
 
-            // Redirección por Rol
-            if (rol === "admin" && !path.includes("administrador")) {
-                window.location.assign("../administrador/administrador.html");
-            } 
-            else if (rol === "profesor" && !path.includes("profesor")) {
-                window.location.assign("../profesor/panel.html");
-            } 
-            else if (rol === "estudiante" && !path.includes("estudiantes")) {
-                window.location.assign("../estudiantes/aula.html");
-            }
-        }
-    } else {
-        if (!window.location.pathname.includes("index.html")) {
-            window.location.assign("../index.html");
-        }
+    if (docSnap.exists()) {
+      const rol = docSnap.data().rol;
+
+      if (rol === "admin") {
+        window.location.href = "administrador/dashboard.html";
+      } 
+      else if (rol === "profesor") {
+        window.location.href = "profesor/panel.html";
+      } 
+      else if (rol === "estudiante") {
+        window.location.href = "estudiantes/aula.html";
+      }
     }
+  }
 });
