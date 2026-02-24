@@ -1,5 +1,6 @@
-import { auth } from "./firebase-config.js";
+import { auth, db } from "./firebase-config.js";
 import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const form = document.getElementById("loginForm");
 
@@ -11,10 +12,33 @@ form.addEventListener("submit", async (e) => {
 
   try {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    console.log("✅ Login exitoso:", userCredential.user.email);
-    alert("Login exitoso");
+
+    const uid = userCredential.user.uid;
+
+    // Buscar datos en Firestore
+    const docRef = doc(db, "usuarios", uid);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      const data = docSnap.data();
+
+      if (data.rol === "estudiante") {
+        window.location.href = "estudiantes/aula.html";
+      }
+
+      if (data.rol === "profesor") {
+        window.location.href = "profesor/panel.html";
+      }
+
+      if (data.rol === "admin") {
+        window.location.href = "administrador/dashboard.html";
+      }
+
+    } else {
+      alert("No se encontraron datos del usuario");
+    }
+
   } catch (error) {
-    console.error("❌ Error al iniciar sesión:", error.message);
     alert("Error: " + error.message);
   }
 });
