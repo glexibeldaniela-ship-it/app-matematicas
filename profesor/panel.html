@@ -1,35 +1,29 @@
-<h2>Publicar Guía</h2>
+import { db } from "../js/firebase-config.js";
+import { addDoc, collection } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-<form id="guiaForm">
+const btnPublicar = document.getElementById("publicar");
 
-  <label>Título:</label><br>
-  <input type="text" id="titulo" required><br><br>
+btnPublicar.addEventListener("click", async () => {
 
-  <label>Año:</label><br>
-  <select id="anio" required>
-    <option value="">Seleccione</option>
-    <option value="1">1er Año</option>
-    <option value="2">2do Año</option>
-    <option value="3">3er Año</option>
-  </select><br><br>
+  const titulo = document.getElementById("titulo").value;
+  const descripcion = document.getElementById("descripcion").value;
 
-  <label>Sección:</label><br>
-  <select id="seccion" required>
-    <option value="">Seleccione</option>
-    <option value="A">A</option>
-    <option value="B">B</option>
-  </select><br><br>
+  if (!titulo || !descripcion) {
+    alert("Completa todos los campos");
+    return;
+  }
 
-  <label>Contenido escrito:</label><br>
-  <textarea id="contenidoTexto" rows="5"></textarea><br><br>
+  try {
+    await addDoc(collection(db, "guias"), {
+      titulo: titulo,
+      descripcion: descripcion,
+      fecha: new Date()
+    });
 
-  <label>Enlace del PDF (Google Drive):</label><br>
-  <input type="text" id="pdfLink" placeholder="Pegue aquí el enlace de Google Drive"><br><br>
+    alert("Guía publicada correctamente 🔥");
+  } catch (error) {
+    console.error(error);
+    alert("Error al publicar");
+  }
 
-  <button type="submit">Publicar</button>
-
-</form>
-
-<p id="mensaje"></p>
-
-<script type="module" src="../js/guia.js"></script>
+});
