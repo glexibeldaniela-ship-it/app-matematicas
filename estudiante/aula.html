@@ -1,15 +1,42 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Aula Estudiante</title>
+  <title>Aula Virtual</title>
 </head>
 <body>
 
-  <h2>Panel del Estudiante</h2>
-  <p>Bienvenido Estudiante</p>
+<h2>📚 Guías Publicadas</h2>
+<div id="contenedorGuias"></div>
 
-  <script type="module" src="../js/estudiante.js"></script>
+<script type="module">
+
+import { auth, db } from "../firebase.js";
+import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const contenedor = document.getElementById("contenedorGuias");
+
+async function cargarGuias() {
+  const querySnapshot = await getDocs(collection(db, "guias"));
+
+  contenedor.innerHTML = "";
+
+  querySnapshot.forEach((doc) => {
+    const guia = doc.data();
+
+    contenedor.innerHTML += `
+      <div style="border:1px solid gray; padding:10px; margin:10px;">
+        <h3>${guia.titulo}</h3>
+        <p>${guia.contenido}</p>
+        <a href="${guia.driveURL}" target="_blank">📂 Ver material</a>
+        <br><small>${new Date(guia.fecha).toLocaleString()}</small>
+      </div>
+    `;
+  });
+}
+
+cargarGuias();
+
+</script>
 
 </body>
 </html>
