@@ -1,29 +1,58 @@
-import { db } from "../js/firebase-config.js";
-import { addDoc, collection } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Panel del Profesor</title>
+</head>
+<body>
 
-const btnPublicar = document.getElementById("publicar");
+  <h1>Panel del Profesor</h1>
 
-btnPublicar.addEventListener("click", async () => {
+  <input type="text" id="titulo" placeholder="Título de la guía">
+  <br><br>
 
-  const titulo = document.getElementById("titulo").value;
-  const descripcion = document.getElementById("descripcion").value;
+  <textarea id="descripcion" placeholder="Descripción o contenido"></textarea>
+  <br><br>
 
-  if (!titulo || !descripcion) {
-    alert("Completa todos los campos");
-    return;
-  }
+  <button id="publicar">Publicar</button>
 
-  try {
-    await addDoc(collection(db, "guias"), {
-      titulo: titulo,
-      descripcion: descripcion,
-      fecha: new Date()
+  <script type="module">
+
+    import { db } from "../js/firebase-config.js";
+    import { addDoc, collection } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const btnPublicar = document.getElementById("publicar");
+
+    btnPublicar.addEventListener("click", async () => {
+
+      const titulo = document.getElementById("titulo").value;
+      const descripcion = document.getElementById("descripcion").value;
+
+      if (!titulo || !descripcion) {
+        alert("Completa todos los campos");
+        return;
+      }
+
+      try {
+        await addDoc(collection(db, "guias"), {
+          titulo: titulo,
+          descripcion: descripcion,
+          fecha: new Date()
+        });
+
+        alert("Guía publicada correctamente 🔥");
+
+        document.getElementById("titulo").value = "";
+        document.getElementById("descripcion").value = "";
+
+      } catch (error) {
+        console.error(error);
+        alert("Error al publicar");
+      }
+
     });
 
-    alert("Guía publicada correctamente 🔥");
-  } catch (error) {
-    console.error(error);
-    alert("Error al publicar");
-  }
+  </script>
 
-});
+</body>
+</html>
