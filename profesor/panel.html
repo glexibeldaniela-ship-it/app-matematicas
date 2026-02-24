@@ -1,58 +1,115 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <title>Panel del Profesor</title>
 </head>
 <body>
 
-  <h1>Panel del Profesor</h1>
+  <h1>Panel del Profesor 👨‍🏫</h1>
 
-  <input type="text" id="titulo" placeholder="Título de la guía">
-  <br><br>
+  <h2>Publicar Guía (Google Drive)</h2>
 
-  <textarea id="descripcion" placeholder="Descripción o contenido"></textarea>
-  <br><br>
+  <input type="text" id="titulo" placeholder="Título de la guía"><br><br>
 
-  <button id="publicar">Publicar</button>
+  <textarea id="descripcion" placeholder="Descripción de la guía"></textarea><br><br>
 
-  <script type="module">
+  <input type="text" id="driveURL" placeholder="Pega aquí el link de Google Drive"><br><br>
 
-    import { db } from "../js/firebase-config.js";
-    import { addDoc, collection } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  <button id="publicar">Publicar Guía</button>
 
-    const btnPublicar = document.getElementById("publicar");
+  <hr>
 
-    btnPublicar.addEventListener("click", async () => {
+  <h2>Guías Publicadas</h2>
+  <div id="listaGuias"></div>
 
-      const titulo = document.getElementById("titulo").value;
-      const descripcion = document.getElementById("descripcion").value;
 
-      if (!titulo || !descripcion) {
-        alert("Completa todos los campos");
-        return;
-      }
+<script type="module">
 
-      try {
-        await addDoc(collection(db, "guias"), {
-          titulo: titulo,
-          descripcion: descripcion,
-          fecha: new Date()
-        });
+import { auth } from "../firebase.js";
+import { db } from "../firebase.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { collection, addDoc, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-        alert("Guía publicada correctamente 🔥");
+const lista = document.getElementById("listaGuias");
 
-        document.getElementById("titulo").value = "";
-        document.getElementById("descripcion").value = "";
+/* 🔐 Protección del Panel */
+onAuthStateChanged(auth, (user) => {
 
-      } catch (error) {
-        console.error(error);
-        alert("Error al publicar");
-      }
+  if (!user) {
+    alert("No has iniciado sesión");
+    window.location.href = "../index.html";
+  }
 
+});
+
+
+/* 🚀 Publicar guía */
+document.getElementById("publicar").addEventListener("click", async () => {
+
+  const titulo = document.getElementById("titulo").value.trim();
+  const descripcion = document.getElementById("descripcion").value.trim();
+  const driveURL = document.getElementById("driveURL").value.trim();
+
+  if (!titulo || !descripcion || !driveURL) {
+    alert("Completa todos los campos");
+    return;
+  }
+
+  try {
+
+    await addDoc(collection(db, "guias"), {
+      titulo: titulo,
+      descripcion: descripcion,
+      driveURL: driveURL,
+      fecha: Date.now()
     });
 
-  </script>
+    alert("Guía publicada correctamente ✅");
+
+    document.getElementById("titulo").value = "";
+    document.getElementById("descripcion").value = "";
+    document.getElementById("driveURL").value = "";
+
+    cargarGuias();
+
+  } catch (error) {
+    console.error("Error al publicar:", error);
+    alert("Error al publicar guía");
+  }
+
+});
+
+
+/* 📚 Cargar guías */
+async function cargarGuias() {
+
+  lista.innerHTML = "";
+
+  const q = query(collection(db, "guias"), orderBy("fecha", "desc"));
+  const snapshot = await getDocs(q);
+
+  snapshot.forEach((doc) => {
+
+    const guia = doc.data();
+
+    lista.innerHTML += `
+      <div style="border:1px solid gray; padding:10px; margin:10px;">
+        <h3>${guia.titulo}</h3>
+        <p>${guia.descripcion}</p>
+        <a href="${guia.driveURL}" target="_blank">
+          📥 Ver en Drive
+        </a>
+      </div>
+    `;
+
+  });
+
+}
+
+cargarGuias();
+
+</script>
 
 </body>
 </html>
