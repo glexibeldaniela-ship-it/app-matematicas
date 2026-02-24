@@ -1,8 +1,7 @@
 import { auth } from "./firebase-config.js";
 import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-const form = document.getElementById("login-form");
-const errorMsg = document.getElementById("error");
+const form = document.getElementById("loginForm");
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -11,11 +10,11 @@ form.addEventListener("submit", async (e) => {
   const password = document.getElementById("password").value;
 
   try {
-    errorMsg.textContent = "";
-    await signInWithEmailAndPassword(auth, email, password);
-    // NO redirigimos aquí
-    // auth.js se encargará automáticamente
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    console.log("✅ Login exitoso:", userCredential.user.email);
+    alert("Login exitoso");
   } catch (error) {
-    errorMsg.textContent = "Correo o contraseña incorrectos";
+    console.error("❌ Error al iniciar sesión:", error.message);
+    alert("Error: " + error.message);
   }
 });
