@@ -94,4 +94,23 @@ async function cargarGuias() {
 
   snapshot.forEach((doc) => {
 
-    const
+    const guia = doc.data();
+
+    lista.innerHTML += `
+      <div style="border:1px solid gray; padding:10px; margin:10px;">
+        <h3>${guia.titulo}</h3>
+        <p>${guia.descripcion}</p>
+        <a href="${guia.driveURL}" target="_blank">📥 Ver en Drive</a>
+      </div>
+    `;
+  });
+}
+
+cargarGuias();
+
+});
+
+</script>
+
+</body>
+</html>
