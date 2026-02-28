@@ -1,28 +1,3 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Panel del Profesor</title>
-</head>
-<body>
-
-  <h1>Panel del Profesor 👨‍🏫</h1>
-
-  <h2>Publicar Guía (Google Drive)</h2>
-
-  <input type="text" id="titulo" placeholder="Título de la guía"><br><br>
-
-  <textarea id="descripcion" placeholder="Descripción de la guía"></textarea><br><br>
-
-  <input type="text" id="driveURL" placeholder="Pega aquí el link de Google Drive"><br><br>
-
-  <button id="publicar">Publicar Guía</button>
-
-  <hr>
-
-  <h2>Guías Publicadas</h2>
-  <div id="listaGuias"></div>
-
 <script type="module">
 
 console.log("🔥 SCRIPT PANEL CARGADO");
@@ -34,103 +9,63 @@ import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/f
 import { collection, addDoc, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const lista = document.getElementById("listaGuias");
-const boton = document.getElementById("publicar");
 
-/* 🔐 Protección del Panel */
+/* 🔐 Esperar autenticación */
 onAuthStateChanged(auth, (user) => {
 
   if (!user) {
     alert("No has iniciado sesión");
     window.location.href = "../index.html";
-  } else {
-    console.log("Usuario activo:", user.email);
-  }
-
-});
-
-
-/* 🚀 Publicar guía */
-boton.addEventListener("click", async () => {
-
-  console.log("Botón presionado");
-
-  const user = auth.currentUser;
-
-  if (!user) {
-    alert("Debes iniciar sesión");
     return;
   }
 
-  const titulo = document.getElementById("titulo").value.trim();
-  const descripcion = document.getElementById("descripcion").value.trim();
-  const driveURL = document.getElementById("driveURL").value.trim();
+  console.log("Usuario activo:", user.email);
 
-  if (!titulo || !descripcion || !driveURL) {
-    alert("Completa todos los campos");
-    return;
-  }
+  /* 🚀 Activar botón SOLO cuando el usuario ya está listo */
+  const boton = document.getElementById("publicar");
 
-  try {
+  boton.addEventListener("click", async () => {
 
-    await addDoc(collection(db, "guias"), {
-      titulo,
-      descripcion,
-      driveURL,
-      profesor: user.email,
-      fecha: Date.now()
-    });
+    console.log("Botón presionado");
 
-    alert("Guía publicada correctamente ✅");
+    const titulo = document.getElementById("titulo").value.trim();
+    const descripcion = document.getElementById("descripcion").value.trim();
+    const driveURL = document.getElementById("driveURL").value.trim();
 
-    document.getElementById("titulo").value = "";
-    document.getElementById("descripcion").value = "";
-    document.getElementById("driveURL").value = "";
+    if (!titulo || !descripcion || !driveURL) {
+      alert("Completa todos los campos");
+      return;
+    }
 
-    cargarGuias();
+    try {
 
-  } catch (error) {
-    console.error("🔥 ERROR REAL:", error);
-    alert("Error: " + error.message);
-  }
+      await addDoc(collection(db, "guias"), {
+        titulo,
+        descripcion,
+        driveURL,
+        profesor: user.email,
+        fecha: Date.now()
+      });
+
+      alert("Guía publicada correctamente ✅");
+
+      document.getElementById("titulo").value = "";
+      document.getElementById("descripcion").value = "";
+      document.getElementById("driveURL").value = "";
+
+      cargarGuias();
+
+    } catch (error) {
+      console.error("🔥 ERROR REAL:", error);
+      alert("Error: " + error.message);
+    }
+
+  });
+
+  cargarGuias();
 
 });
 
 
 /* 📚 Cargar guías */
-async function cargarGuias() {
-
-  lista.innerHTML = "";
-
-  try {
-
-    const q = query(collection(db, "guias"), orderBy("fecha", "desc"));
-    const snapshot = await getDocs(q);
-
-    snapshot.forEach((doc) => {
-
-      const guia = doc.data();
-
-      lista.innerHTML += `
-        <div style="border:1px solid gray; padding:10px; margin:10px;">
-          <h3>${guia.titulo}</h3>
-          <p>${guia.descripcion}</p>
-          <a href="${guia.driveURL}" target="_blank">
-            📥 Ver en Drive
-          </a>
-        </div>
-      `;
-
-    });
-
-  } catch (error) {
-    console.error("Error cargando guías:", error);
-  }
-
-}
-
-cargarGuias();
-
-</script>
-
-</body>
-</html>
+async function cargar
