@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Panel del Profesor</title>
+<meta charset="UTF-8">
+<title>Panel del Profesor</title>
 </head>
 <body>
 
@@ -25,36 +25,27 @@
 
 <script type="module">
 
-console.log("🔥 SCRIPT PANEL CARGADO");
-
-import { auth } from "../js/firebase.js";
-import { db } from "../js/firebase.js";
-
+import { auth, db } from "../js/firebase.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { collection, addDoc, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+window.addEventListener("DOMContentLoaded", () => {
 
 const lista = document.getElementById("listaGuias");
 const boton = document.getElementById("publicar");
 
-/* 🔐 Protección del Panel */
+/* 🔐 Protección */
 onAuthStateChanged(auth, (user) => {
-
   if (!user) {
     alert("No has iniciado sesión");
     window.location.href = "../index.html";
-  } else {
-    console.log("Usuario activo:", user.email);
   }
-
 });
 
-/* 🚀 Publicar guía */
-boton.addEventListener("click", async () => {
-
-  console.log("Botón presionado");
+/* 🚀 Publicar */
+boton.onclick = async () => {
 
   const user = auth.currentUser;
-
   if (!user) {
     alert("Debes iniciar sesión");
     return;
@@ -88,47 +79,19 @@ boton.addEventListener("click", async () => {
     cargarGuias();
 
   } catch (error) {
-    console.error("🔥 ERROR REAL:", error);
     alert("Error: " + error.message);
+    console.error(error);
   }
-
-});
+};
 
 /* 📚 Cargar guías */
 async function cargarGuias() {
 
   lista.innerHTML = "";
 
-  try {
+  const q = query(collection(db, "guias"), orderBy("fecha", "desc"));
+  const snapshot = await getDocs(q);
 
-    const q = query(collection(db, "guias"), orderBy("fecha", "desc"));
-    const snapshot = await getDocs(q);
+  snapshot.forEach((doc) => {
 
-    snapshot.forEach((doc) => {
-
-      const guia = doc.data();
-
-      lista.innerHTML += `
-        <div style="border:1px solid gray; padding:10px; margin:10px;">
-          <h3>${guia.titulo}</h3>
-          <p>${guia.descripcion}</p>
-          <a href="${guia.driveURL}" target="_blank">
-            📥 Ver en Drive
-          </a>
-        </div>
-      `;
-
-    });
-
-  } catch (error) {
-    console.error("Error cargando guías:", error);
-  }
-
-}
-
-cargarGuias();
-
-</script>
-
-</body>
-</html>
+    const
